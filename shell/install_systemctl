@@ -1,0 +1,18 @@
+#! /bin/bash
+
+if [ $1 ]
+then
+    sudo mkdir -p /home/core/data/$1
+    if [ -d "/home/core/docker/$1/conf/" ]
+    then
+        echo "already has"
+    else
+        sudo cp -rfp /home/core/docker/$1/conf/* /home/core/data/$1/
+    fi
+    sudo cp -rfp /home/core/docker/$1/$1.service /etc/systemd/system/
+    sudo systemctl daemon-reload
+    sudo systemctl enable $1
+    sudo systemctl start $1 &
+else
+    echo install_systemctl someservice
+fi

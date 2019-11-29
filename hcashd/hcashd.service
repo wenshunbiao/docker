@@ -1,0 +1,19 @@
+[Unit]
+Description=hcashd
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop hcashd
+ExecStartPre=-/usr/bin/docker kill hcashd
+ExecStartPre=-/usr/bin/docker rm hcashd
+ExecStartPre=-/usr/bin/docker network create coin-network
+ExecStart=/usr/bin/docker run --name hcashd --net=host -v /home/core/data/hcashd:/root/.hcashd ivories/hcashd hcashd 
+ExecStop=/usr/bin/docker stop hcashd
+ExecStop=/usr/bin/docker kill hcashd
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,17 @@
+[Unit]
+Description=rsync
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop rsync
+ExecStartPre=-/usr/bin/docker kill rsync
+ExecStartPre=-/usr/bin/docker rm rsync
+ExecStart=/usr/bin/docker run --name rsync -p 873:873 -v /home/core/data/rsync/rsyncd.log:/var/log/rsyncd.log -v /home/core/data/rsync/rsyncd.secrets:/etc/rsyncd.secrets -v /home/core/data/rsync/rsyncd.conf:/etc/rsyncd.conf -v /home/core/data/rsync/data:/data -v /home/core/data/rsync/crontab:/var/spool/cron/crontabs/root ivories/rsync:1.0
+ExecStop=/usr/bin/docker stop rsync
+
+[Install]
+WantedBy=multi-user.target

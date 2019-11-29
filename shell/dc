@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ ! $1 ] 
+then
+    echo "dc domain" 
+    exit
+fi
+
+uuid=`uuidgen`
+
+echo http://$1:4001/v2/keys/$uuid
+curl -X PUT http://$1:4001/v2/keys/discovery/$uuid/_config/size -d value=3
+

@@ -1,0 +1,42 @@
+[parity]
+chain = "foundation"
+mode = "active"
+no_download = true
+
+[ipc]
+disable = true
+
+[rpc]
+disable = false
+port = 8545
+interface = "all"
+cors = []
+apis = ["web3", "eth", "pubsub", "net", "parity", "parity_pubsub", "traces", "rpc", "shh", "shh_pubsub"]
+hosts = ["none"]
+
+[mining]
+#author = "<REPLACED-TO-YOUR-ADDRESS>"
+#extra_data = "<node-id>/Project BTCPool/"
+force_sealing = true
+reseal_on_uncle = true
+reseal_on_txs = "all"
+reseal_min_period = 4000
+tx_queue_size = 8192
+tx_queue_per_sender = 128
+
+[network]
+warp = true
+#reserved_peers = "/home/parity/.local/share/io.parity.ethereum/peer.list"
+min_peers = 100
+max_peers = 200
+
+#[misc]
+#logging = "own_tx=trace,sync=info,chain=info,network=info,miner=trace"
+#log_file = "/home/parity/.local/share/io.parity.ethereum/parity.log"
+
+[footprint]
+pruning = "fast"
+cache_size = 1024
+
+[snapshots]
+disable_periodic = true

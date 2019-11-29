@@ -1,0 +1,26 @@
+[Unit]
+Description=zentao
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop zentao
+ExecStartPre=-/usr/bin/docker kill zentao
+ExecStartPre=-/usr/bin/docker rm zentao
+ExecStartPre=-/home/core/docker/shell/install_fleetctl zentao
+ExecStartPre=-/usr/bin/docker network create nginx-network
+
+ExecStart=/usr/bin/docker run --name zentao --net=nginx-network -e USER="root" -e PASSWD="yellow" -e BIND_ADDRESS="false" -e SMTP_HOST="163.177.90.125 smtp.exmail.qq.com" -v /home/core/data/zentao:/opt/zbox ivories/zentao:latest
+
+ExecStop=/usr/bin/docker stop zentao
+ExecStop=/usr/bin/docker kill zentao
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+

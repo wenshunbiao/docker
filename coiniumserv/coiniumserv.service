@@ -1,0 +1,20 @@
+[Unit]
+Description=coiniumserv
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop coiniumserv
+ExecStartPre=-/usr/bin/docker kill coiniumserv
+ExecStartPre=-/usr/bin/docker rm coiniumserv
+ExecStartPre=-/usr/bin/docker network create nginx-network
+ExecStart=/usr/bin/docker run --name coiniumserv --net=host -v /home/core/data:/data -v /home/core/data/coiniumserv/config:/usr/local/bin/CoiniumServ/bin/Release/config/ ivories/coiniumserv 
+ExecStop=/usr/bin/docker stop coiniumserv
+ExecStop=/usr/bin/docker kill coiniumserv
+
+[Install]
+WantedBy=multi-user.target
+

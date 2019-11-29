@@ -1,0 +1,21 @@
+[Unit]
+Description=btm
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop btm
+ExecStartPre=-/usr/bin/docker kill btm
+ExecStartPre=-/usr/bin/docker rm btm
+ExecStartPre=-/home/core/docker/shell/install_fleetctl btm
+ExecStartPre=-/usr/bin/docker network create nginx-network
+ExecStart=/usr/bin/docker run --name btm --net nginx-network -p 10028:80 -p 46656:46656 -v /home/core/data/wallet/btm:/root/ ivories/btm
+ExecStop=/usr/bin/docker stop btm
+ExecStop=/usr/bin/docker kill btm
+
+[Install]
+WantedBy=multi-user.target
+

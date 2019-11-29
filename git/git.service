@@ -1,0 +1,16 @@
+[Unit]
+Description=git
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill git
+ExecStartPre=-/usr/bin/docker rm git
+ExecStart=/usr/bin/docker run  --name git -p 33:22 -v /etc/ssh/ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key -v /home/core/data/git:/git -v /home/core/data/git/ssh:/root/.ssh ivories/git:1.0
+ExecStop=/usr/bin/docker kill git
+
+[Install]
+WantedBy=multi-user.target

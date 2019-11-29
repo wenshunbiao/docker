@@ -1,0 +1,20 @@
+[Unit]
+Description=xlm
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop xlm
+ExecStartPre=-/usr/bin/docker kill xlm
+ExecStartPre=-/usr/bin/docker rm xlm
+ExecStart=/usr/bin/docker run -t --name=xlm -p 10028:80 -v /home/core/data/wallet/xlm:/opt/stellar ivories/xlm
+#  --pubnet
+
+ExecStop=/usr/bin/docker stop xlm
+
+[Install]
+WantedBy=multi-user.target
+

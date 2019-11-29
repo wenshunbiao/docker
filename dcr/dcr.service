@@ -1,0 +1,19 @@
+[Unit]
+Description=dcr
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop dcr
+ExecStartPre=-/usr/bin/docker kill dcr
+ExecStartPre=-/usr/bin/docker rm dcr
+ExecStart=/usr/bin/docker run --user=root --name=dcr -p 10009:8009 -p 10010:8010 -v /home/core/data/wallet/dcr:/root/.dcrd -v /home/core/data/wallet/dcr/wallet:/root/.dcrwallet ivories/dcr
+
+ExecStop=/usr/bin/docker stop dcr
+
+[Install]
+WantedBy=multi-user.target
+

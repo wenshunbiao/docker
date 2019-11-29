@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ ! $1 ] 
+then
+    echo "p_by_name servicename" 
+    exit
+fi
+
+docker ps -a | grep "${1}" | awk '{print $1 }'|xargs docker stop
+docker ps -a | grep "${1}" | awk '{print $1 }'|xargs docker rm
+

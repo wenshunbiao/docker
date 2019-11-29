@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [ "$1" == "" ]; then
+    echo "static_ip name ip gateway"
+    echo "static_ip enp3s0 192.168.1.80 192.168.1.1"
+    exit
+fi
+
+sudo touch /etc/systemd/network/static.network
+sudo chmod -R 777 /etc/systemd/network/static.network
+cat > /etc/systemd/network/static.network << EOF
+[Match]  
+Name=$1
+
+[Network]
+Address=$2/24  
+Gateway=$3
+DNS=223.5.5.5
+DNS=223.6.6.6
+DNS=8.8.8.8
+EOF

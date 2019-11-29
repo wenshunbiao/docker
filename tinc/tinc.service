@@ -1,0 +1,17 @@
+[Unit]
+Description=tinc
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop tinc
+ExecStartPre=-/usr/bin/docker kill tinc
+ExecStartPre=-/usr/bin/docker rm tinc
+ExecStart=/usr/bin/docker run --name tinc -v /home/core/data/tinc:/etc/tinc -p 55655:55655/tcp -p 55655:55655/udp --cap-add=NET_ADMIN  ivories/tinc
+ExecStop=/usr/bin/docker stop tinc
+ExecStop=/usr/bin/docker kill tinc
+
+[Install]
+WantedBy=multi-user.target
+

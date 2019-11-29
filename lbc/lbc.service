@@ -1,0 +1,18 @@
+[Unit]
+Description=lbc
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop lbc
+ExecStartPre=-/usr/bin/docker kill lbc
+ExecStartPre=-/usr/bin/docker rm lbc
+ExecStart=/usr/bin/docker run --name=lbc -p 10010:8332 -v /home/core/data/wallet/lbc/.lbrynet:/home/lbry/.lbrynet -v /home/core/data/wallet/lbc/.lbryum:/home/lbry/.lbryum -v /home/core/data/wallet/lbc/Downloads:/home/lbry/Downloads ivories/lbc
+ExecStop=/usr/bin/docker stop lbc
+
+[Install]
+WantedBy=multi-user.target
+

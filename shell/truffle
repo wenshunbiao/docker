@@ -1,0 +1,3 @@
+#!/bin/bash
+p_by_name ivories/truffle 2>/dev/null
+docker run --name=truffle -it --rm --net nginx-network -v /root/.ssh:/root/.ssh -v ~/data:/data ivories/truffle /bin/bash

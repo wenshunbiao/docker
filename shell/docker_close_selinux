@@ -1,0 +1,7 @@
+#!/bin/bash
+/home/core/docker/shell/p docker
+sudo mkdir /etc/systemd/system/docker.service.d
+sudo chmod -R 777 /etc/systemd/system/docker.service.d
+echo "[Service]" > /etc/systemd/system/docker.service.d/selinux.conf
+echo "Environment=DOCKER_SELINUX=--selinux-enabled=false" >> /etc/systemd/system/docker.service.d/selinux.conf
+/home/core/docker/shell/s docker

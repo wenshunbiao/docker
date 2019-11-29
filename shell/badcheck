@@ -1,0 +1,9 @@
+#! /bin/bash
+
+if [ ! $1 ]
+then
+    echo "badcheck /dev/sda"
+    exit
+fi
+
+sudo badblocks -s -v -o ~/badblocks.log $1

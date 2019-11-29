@@ -1,0 +1,5 @@
+use mysql
+update user set host = '%' where user = 'root';
+select host, user from user;
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;
+FLUSH PRIVILEGES;

@@ -1,0 +1,3 @@
+#!/bin/bash
+docker stop spark && docker rm spark
+docker run -it --rm --name spark -p 6066:6066 -p 7077:7077 -p 8080:8080 -p 8088:8088 -p 8042:8042 -p 50070:50070  -p 50075:50075  -p 50090:50090 --security-opt seccomp=unconfined -v /home/core/data:/data -v /home/core/data/spark:/usr/local/hadoop-2.6.0/etc/hadoop/spark -h sandbox ivories/bowtie:1.0 bash

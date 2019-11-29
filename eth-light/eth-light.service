@@ -1,0 +1,18 @@
+[Unit]
+Description=eth-light
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop eth-light
+ExecStartPre=-/usr/bin/docker kill eth-light
+ExecStartPre=-/usr/bin/docker rm eth-light
+ExecStart=/usr/bin/docker run --name=eth-light -p 15003:80 -v /home/core/data/eth-light/conf.d:/etc/nginx/conf.d -v /home/core/data/eth-light:/root ivories/eth /usr/bin/supervisord -c /root/supervisord.conf -n
+ExecStop=/usr/bin/docker stop eth-light
+
+[Install]
+WantedBy=multi-user.target
+

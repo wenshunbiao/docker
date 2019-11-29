@@ -1,0 +1,42 @@
+#!/bin/bash
+
+source /home/core/.profile
+source /etc/environment
+
+/usr/bin/curl -X PUT -d "value={\"Network\":\"10.2.0.0/16\",\"Backend\":{\"Type\":\"vxlan\"}}" "http://127.0.0.1:2379/v2/keys/coreos.com/network/config"
+
+FLANNEL_FILE=/etc/systemd/system/flannel.service
+sudo touch $FLANNEL_FILE
+sudo chmod -R 777 $FLANNEL_FILE
+
+sudo cat > $FLANNEL_FILE << EOF
+[Unit]
+Description=flannel
+After=etcd.service
+Requires=etcd.service
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop flannel
+ExecStartPre=-/usr/bin/docker kill flannel
+ExecStartPre=-/usr/bin/docker rm flannel
+ExecStartPre=/sbin/modprobe ip_tables
+ExecStart=/usr/bin/docker run --name=flannel --net=host --privileged \\
+  -v /home/core/data/flannel:/data \\
+  -v /run/flannel:/run/flannel \\
+  -v /usr/share/ca-certificates:/etc/ssl/certs \\
+  -v /usr/share/ca-certificates:/usr/share/ca-certificates \\
+  -v /etc/hosts:/etc/hosts \\
+  -v /etc/resolv.conf:/etc/resolv.conf \\
+  ivories/flannel:1.0 /opt/bin/flanneld --ip-masq=true \\
+  --iface="${LAN_IP}" --etcd-endpoints=http://${LAN_IP}:2379
+ExecStop=/usr/bin/docker stop flannel
+ExecStop=/usr/bin/docker kill flannel
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+/home/core/docker/shell/waitService flannel

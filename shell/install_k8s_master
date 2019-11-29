@@ -1,0 +1,52 @@
+#!/bin/bash
+
+source /home/core/.profile
+source /etc/environment
+
+mkdir -p /home/core/openssl
+cd /home/core/openssl
+
+cat > openssl.cnf << EOF
+[req]
+req_extensions = v3_req
+distinguished_name = req_distinguished_name
+[req_distinguished_name]
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = kubernetes
+DNS.2 = kubernetes.default
+DNS.3 = kubernetes.default.svc
+DNS.4 = kubernetes.default.svc.cluster.local
+IP.1 = 10.3.0.1
+IP.2 = ${LAN_IP}
+EOF
+
+#first create ssl
+if [ ! -d "/etc/kubernetes/ssl" ]; then
+
+openssl genrsa -out ca-key.pem 2048
+openssl req -x509 -new -nodes -key ca-key.pem -days 10000 -out ca.pem -subj "/CN=kube-ca"
+openssl genrsa -out apiserver-key.pem 2048
+openssl req -new -key apiserver-key.pem -out apiserver.csr -subj "/CN=kube-apiserver" -config openssl.cnf
+openssl x509 -req -in apiserver.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out apiserver.pem -days 365 -extensions v3_req -extfile openssl.cnf
+
+openssl genrsa -out admin-key.pem 2048
+openssl req -new -key admin-key.pem -out admin.csr -subj "/CN=kube-admin"
+openssl x509 -req -in admin.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out admin.pem -days 365
+
+sudo mkdir -p /etc/kubernetes/ssl
+sudo cp -rfp /home/core/openssl/* /etc/kubernetes/ssl/
+sudo chmod 600 /etc/kubernetes/ssl/*
+sudo chown root:root /etc/kubernetes/ssl/*
+
+sudo mkdir -p /home/core/data/kubernetes/ssl/
+sudo cp -rfp /home/core/openssl/* /home/core/data/kubernetes/ssl/
+
+fi
+#end create ssl
+
+rm -rf /home/core/openssl
+

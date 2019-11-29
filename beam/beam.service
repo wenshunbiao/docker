@@ -1,0 +1,18 @@
+[Unit]
+Description=beam
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop beam
+ExecStartPre=-/usr/bin/docker kill beam
+ExecStartPre=-/usr/bin/docker rm beam
+ExecStart=/usr/bin/docker run --name=beam -p 10023:80 -v /home/core/data/wallet/beam:/beam ivories/beam
+ExecStop=/usr/bin/docker stop beam
+
+[Install]
+WantedBy=multi-user.target
+

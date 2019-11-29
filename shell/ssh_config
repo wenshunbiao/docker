@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ ! $1 ]
+then
+    echo "command: ssh_config domain"
+    echo "sudo coreos-cloudinit --from-url=http://domain/ssh-config.yaml"
+    exit
+fi
+
+sudo journalctl --vacuum-size=100M
+sudo coreos-cloudinit --from-url=http://$1/ssh-config.yaml

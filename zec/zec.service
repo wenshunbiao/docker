@@ -1,0 +1,18 @@
+[Unit]
+Description=zec
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop zec
+ExecStartPre=-/usr/bin/docker kill zec
+ExecStartPre=-/usr/bin/docker rm zec
+ExecStart=/usr/bin/docker run --name=zec -p 10005:8233 -v /home/core/data/zec:/root ivories/zec
+ExecStop=/usr/bin/docker stop zec
+
+[Install]
+WantedBy=multi-user.target
+

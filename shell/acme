@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo /home/core/docker/acme/make.sh $*

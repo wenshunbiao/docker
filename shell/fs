@@ -1,0 +1,4 @@
+#!/bin/bash
+
+s $1 docker
+

@@ -1,0 +1,22 @@
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://HOSTNAME_HADOOP:9000</value>
+    </property>
+    <property>
+        <name>fs.default.name</name>
+        <value>hdfs://HOSTNAME_HADOOP:9000</value>
+    </property>
+    <property>
+        <name>dfs.name.dir</name>
+        <value>/data/hdfs/name</value> 
+    </property>
+    <property>
+        <name>dfs.data.dir</name> 
+        <value>/data/hdfs/data</value>
+    </property>
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/data/hdfs/tmp</value>
+    </property>
+</configuration>

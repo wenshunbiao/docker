@@ -1,0 +1,17 @@
+[Unit]
+Description=emacs
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill emacs
+ExecStartPre=-/usr/bin/docker rm emacs
+ExecStart=/usr/bin/docker run --name emacs -p 25333:22 -v /home/core/.ssh/authorized_keys:/authorized_keys -v /home/core/.emacs.d:/root/.emacs.d -v /home/core/data:/data ivories/emacs:1.0
+ExecStop=/usr/bin/docker kill emacs
+
+[Install]
+WantedBy=multi-user.target
+

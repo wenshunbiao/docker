@@ -1,0 +1,19 @@
+[Unit]
+Description=openvpn
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop openvpn
+ExecStartPre=-/usr/bin/docker kill openvpn
+ExecStartPre=-/usr/bin/docker rm openvpn
+ExecStart=/usr/bin/docker run --name openvpn -v /home/core/data/openvpn:/etc/openvpn --cap-add=NET_ADMIN ivories/openvpn
+#ExecStart=/usr/bin/docker run --name openvpn -v /home/core/data/openvpn:/etc/openvpn --cap-add=NET_ADMIN --device=/dev/net/tun ivories/openvpn openvpn --config /etc/openvpn/CLIENTNAME.ovpn
+ExecStop=/usr/bin/docker stop openvpn
+ExecStop=/usr/bin/docker kill openvpn
+
+[Install]
+WantedBy=multi-user.target
+

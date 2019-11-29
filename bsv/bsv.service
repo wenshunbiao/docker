@@ -1,0 +1,18 @@
+[Unit]
+Description=bsv
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop bsv
+ExecStartPre=-/usr/bin/docker kill bsv
+ExecStartPre=-/usr/bin/docker rm bsv
+ExecStart=/usr/bin/docker run --name=bsv -p 10020:8332 -v /home/core/data/bsv:/root/.bitcoin ivories/bsv
+ExecStop=/usr/bin/docker stop bsv
+
+[Install]
+WantedBy=multi-user.target
+

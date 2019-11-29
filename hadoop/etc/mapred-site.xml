@@ -1,0 +1,26 @@
+<configuration>
+    <property>
+         <name>mapred.job.tracker</name>
+         <value>HOSTNAME_HADOOP:9001</value>
+    </property>
+    <property>
+         <name>mapred.map.tasks</name>
+         <value>20</value>
+    </property>
+    <property>
+         <name>mapred.reduce.tasks</name>
+         <value>4</value>
+    </property>
+    <property>
+         <name>mapreduce.framework.name</name>
+         <value>yarn</value>
+    </property>
+    <property>
+         <name>mapreduce.jobhistory.address</name>
+         <value>HOSTNAME_HADOOP:10020</value>
+    </property>
+    <property>
+         <name>mapreduce.jobhistory.webapp.address</name>
+         <value>HOSTNAME_HADOOP:19888</value>
+    </property>
+</configuration>

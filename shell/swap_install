@@ -1,0 +1,12 @@
+#! /bin/bash
+
+#if vps
+sudo swapoff -a
+sudo dd if=/dev/zero of=/swap bs=1024 count=1024000
+sudo mkswap /swap
+sudo swapon /swap
+sudo touch /etc/fstab
+sudo chown -R core:core /etc/fstab
+echo "swap                    /swap                   swap    defaults        0 0" >> /etc/fstab
+#end if
+

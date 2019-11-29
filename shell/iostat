@@ -1,0 +1,2 @@
+#!/bin/bash
+docker run --rm -ti --privileged --net=host --pid=host ivories/top iostat -d -k 1 10

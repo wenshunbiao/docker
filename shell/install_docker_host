@@ -1,0 +1,5 @@
+#!/bin/bash
+source /home/core/.profile
+source /etc/environment
+
+

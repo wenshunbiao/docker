@@ -1,0 +1,4 @@
+#! /bin/bash
+install_fleetctl autorun
+sudo cp /home/core/docker/shell/autorun /home/core/data/autorun/
+sudo cp /home/core/docker/autorun/autorun.local.service /home/core/data/autorun/autorun.service

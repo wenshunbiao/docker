@@ -1,0 +1,18 @@
+[Unit]
+Description=ubtc
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop ubtc
+ExecStartPre=-/usr/bin/docker kill ubtc
+ExecStartPre=-/usr/bin/docker rm ubtc
+ExecStart=/usr/bin/docker run --name=ubtc -p 10019:8000 -v /home/core/data/ubtc:/root/.bitcoin ivories/ubtc
+ExecStop=/usr/bin/docker stop ubtc
+
+[Install]
+WantedBy=multi-user.target
+

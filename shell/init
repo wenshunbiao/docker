@@ -1,0 +1,7 @@
+#! /bin/bash
+sudo dd if=/dev/zero of=/EMPTY bs=1M
+sudo rm -f /EMPTY
+sudo echo > /root/.bash_history
+echo > ~/.bash_history
+exit
+

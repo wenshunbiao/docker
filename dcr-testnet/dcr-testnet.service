@@ -1,0 +1,19 @@
+[Unit]
+Description=dcr-testnet
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop dcr-testnet
+ExecStartPre=-/usr/bin/docker kill dcr-testnet
+ExecStartPre=-/usr/bin/docker rm dcr-testnet
+ExecStart=/usr/bin/docker run --user=root --name=dcr-testnet -p 10020:19109 -p 10021:19110 -v /home/core/data/wallet/dcr-testnet:/supervisor -v /home/core/data/wallet/dcr-testnet:/root/.dcrd -v /home/core/data/wallet/dcr-testnet/wallet:/root/.dcrwallet ivories/dcr
+
+ExecStop=/usr/bin/docker stop dcr-testnet
+
+[Install]
+WantedBy=multi-user.target
+

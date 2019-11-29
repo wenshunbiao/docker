@@ -1,0 +1,21 @@
+[Unit]
+Description=truffle
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop truffle
+ExecStartPre=-/usr/bin/docker kill truffle
+ExecStartPre=-/usr/bin/docker rm truffle
+ExecStartPre=-/usr/bin/docker network create nginx-network
+ExecStart=/usr/bin/docker run --name=truffle --net nginx-network -v /root/.ssh:/root/.ssh -v /home/core/data:/data ivories/truffle
+ExecStop=/usr/bin/docker stop truffle
+ExecStop=/usr/bin/docker kill truffle
+
+[Install]
+WantedBy=multi-user.target
+
+

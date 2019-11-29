@@ -1,0 +1,19 @@
+#! /bin/bash
+if [ $1 ]
+then
+    if [ -d "/home/core/data/$1/" ] && [ "$2" != "f" ]
+    then
+        echo "already install ${1}"
+    else
+        sudo mkdir -p /home/core/data/$1
+
+        if [ -d "/home/core/docker/$1/conf/" ]
+        then
+            sudo cp -rfp /home/core/docker/$1/conf/* /home/core/data/$1/ > /dev/null 
+        fi
+        sudo cp -rfp /home/core/docker/$1/$1.service /home/core/data/$1/ > /dev/null
+        echo "install $1 success"
+    fi
+else
+    echo install_service someservice
+fi

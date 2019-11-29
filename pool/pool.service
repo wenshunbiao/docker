@@ -1,0 +1,18 @@
+[Unit]
+Description=pool
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop pool
+ExecStartPre=-/usr/bin/docker kill pool
+ExecStartPre=-/usr/bin/docker rm pool
+ExecStart=/usr/bin/docker run --name pool --net=host -e POOL_PORT="3333" -e MINER_WORKER="worker" -e MINER_PASS="x" -e DAEMON_HOST="127.0.0.1" -e DAEMON_USER="user" -e DAEMON_PASS="password" -e DAEMON_PORT="11009" -e DEFAULT_DIFF="1.0" -e DIFF_VARIANCE="10.0" ivories/pool
+ExecStop=/usr/bin/docker stop pool
+ExecStop=/usr/bin/docker kill pool
+
+[Install]
+WantedBy=multi-user.target

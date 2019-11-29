@@ -1,0 +1,17 @@
+[Unit]
+Description=obfsproxy
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop obfsproxy
+ExecStartPre=-/usr/bin/docker kill obfsproxy
+ExecStartPre=-/usr/bin/docker rm obfsproxy
+ExecStart=/usr/bin/docker run --name obfsproxy --net=nginx-network -v /home/core/data/obfsproxy:/etc/obfsproxy -e PASSWORD=J23TNHPJPAOQJLTCPLFD4CQYVFY6MEVP -e DEST_ADDR=nginx -e DEST_PORT=8443 ivories/obfsproxy
+ExecStop=/usr/bin/docker stop obfsproxy
+ExecStop=/usr/bin/docker kill obfsproxy
+
+[Install]
+WantedBy=multi-user.target
+

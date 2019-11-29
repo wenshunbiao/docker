@@ -1,0 +1,18 @@
+[Unit]
+Description=neo
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop neo
+ExecStartPre=-/usr/bin/docker kill neo
+ExecStartPre=-/usr/bin/docker rm neo
+ExecStart=/usr/bin/docker run --name=neo -p 10027:80 -v /home/core/data/wallet/neo:/neo ivories/neo:core
+ExecStop=/usr/bin/docker stop neo
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,16 @@
+[Unit]
+Description=bind
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill bind
+ExecStartPre=-/usr/bin/docker rm bind
+ExecStart=/usr/bin/docker run --name bind -p 53:53/udp -v /home/core/data/bind:/etc/bind -v /home/core/data/bind/log:/var/log/named ivories/bind:1.0
+ExecStop=/usr/bin/docker kill bind
+
+[Install]
+WantedBy=multi-user.target

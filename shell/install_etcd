@@ -1,0 +1,46 @@
+#!/bin/bash
+source /home/core/.profile
+source /etc/environment
+
+ETH0=$LAN_IP
+ADD_DATA=""
+
+if [ "$ETH0" = "" ]
+then
+  ETH0="127.0.0.1"
+fi
+
+if [ "$DC_SERVER" != "" ]
+then
+  ADD_DATA="--listen-peer-urls http://$ETH0:2380 --initial-advertise-peer-urls http://$ETH0:2380 --initial-cluster $DC_SERVER --initial-cluster-token $DC_TOKEN --initial-cluster-state=new"
+fi
+
+sp etcd
+sp etcd2
+
+ETCD_FILE=/etc/systemd/system/etcd.service
+sudo touch $ETCD_FILE
+sudo chmod -R 777 $ETCD_FILE
+
+sudo cat > $ETCD_FILE << EOF
+[Unit]
+Description=etcd
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop etcd
+ExecStartPre=-/usr/bin/docker kill etcd
+ExecStartPre=-/usr/bin/docker rm etcd
+ExecStart=/usr/bin/docker run --name=etcd --net=host -v /home/core/local/etcd:/data ivories/etcd:1.0 /bin/etcd --name `hostname` --data-dir /data --initial-cluster-state new --listen-client-urls http://$ETH0:2379,http://127.0.0.1:2379 --advertise-client-urls http://$ETH0:2379 $ADD_DATA
+ExecStop=/usr/bin/docker stop etcd
+ExecStop=/usr/bin/docker kill etcd
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+/home/core/docker/shell/waitService etcd

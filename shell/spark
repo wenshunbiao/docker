@@ -1,0 +1,2 @@
+#!/bin/bash
+docker run -it --rm --name spark -h sandbox sequenceiq/spark:1.6.0 bash

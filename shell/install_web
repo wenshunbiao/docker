@@ -1,0 +1,5 @@
+#! /bin/bash
+for SERVICE_NAME in redis mysql php nginx
+do
+    /home/core/docker/shell/install_fleetctl ${SERVICE_NAME} -f
+done

@@ -1,0 +1,12 @@
+# /etc/skel/.bashrc
+
+if [[ $- != *i* ]] ; then
+        return
+fi
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+export PATH="/home/core/docker/shell:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin:$PATH"

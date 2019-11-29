@@ -1,0 +1,13 @@
+[Unit]
+Description=autorun_mount
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=0
+ExecStartPre=/home/core/docker/shell/mount_data
+ExecStart=/home/core/docker/shell/autorun_mount
+
+[Install]
+WantedBy=multi-user.target
+

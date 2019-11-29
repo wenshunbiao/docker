@@ -1,0 +1,24 @@
+[Unit]
+Description=eos
+After=autorun.service
+Requires=autorun.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop eos
+ExecStartPre=-/usr/bin/docker kill eos
+ExecStartPre=-/usr/bin/docker rm eos
+
+#ExecStart=/usr/bin/docker run --name=eos -p 10011:8888 -v /home/core/data/wallet/eos:/eosio eosio/eos:v1.6.2 nodeos --config-dir /eosio --plugin eosio::producer_plugin --plugin eosio::chain_plugin --plugin eosio::chain_api_plugin --plugin eosio::history_plugin --plugin eosio::history_api_plugin --plugin eosio::http_plugin --plugin eosio::net_api_plugin --http-server-address=0.0.0.0:8888 --access-control-allow-origin=* --http-validate-host=false --filter-on='nameofwallet:transfer:'
+
+# --delete-all-blocks --snapshot /eosio/snapshots/snapshot-0298bb2d03e91207a98ba295df909358c81ef29bc7447896529dd4e39611fde6.bin
+#--genesis-json /eosio/genesis.json
+
+ExecStart=/usr/bin/docker run --name=eos  -p 10011:80  -v /home/core/data/wallet/eos:/root  ivories/eos
+
+ExecStop=/usr/bin/docker stop eos
+
+[Install]
+WantedBy=multi-user.target

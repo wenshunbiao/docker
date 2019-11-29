@@ -1,0 +1,64 @@
+#! /bin/bash
+LOCAL_IP=`hostname`
+AUTORUN_DIR=/home/core/data/autorun/$LOCAL_IP
+sudo mkdir $AUTORUN_DIR
+sudo touch /home/core/.profile
+
+source /home/core/.profile
+source /etc/environment
+
+/home/core/docker/shell/mount_data
+
+hour=`date "+%H"`
+minute=`date "+%M"`
+let minute=hour*60+minute
+echo $AUTORUN_DIR/1
+while [ 1 ]
+do
+    let minute+=1
+    let oneMinute=minute%1
+    let tenMinute=minute%10
+    let halfHour=minute%30
+    let oneHour=minute%60
+    let oneDay=minute%1440
+    let twoDay=minute%2880
+
+    if [ $oneMinute = 0 ]
+    then
+        $AUTORUN_DIR/autorun_one_minute 
+        $AUTORUN_DIR/1
+    fi
+
+    if [ $tenMinute = 0 ]
+    then
+        $AUTORUN_DIR/autorun_ten_minute
+    fi
+
+    if [ $halfHour = 0 ]
+    then
+        $AUTORUN_DIR/autorun_half_hour 
+        $AUTORUN_DIR/30
+    fi
+
+    if [ $oneHour = 0 ]
+    then
+       $AUTORUN_DIR/autorun_one_hour 
+       $AUTORUN_DIR/60
+    fi
+
+    if [ $oneDay = 0 ]
+    then
+       $AUTORUN_DIR/autorun_one_day 
+       $AUTORUN_DIR/1440
+       /home/core/docker/shell/autorun_docker  
+    fi
+
+    if [ $twoDay = 0 ]
+    then
+       $AUTORUN_DIR/autorun_two_day 
+       $AUTORUN_DIR/2880
+    fi
+
+    sleep 60s
+
+done

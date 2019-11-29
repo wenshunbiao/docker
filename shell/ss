@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ ! $1 ] 
+then
+    echo "ss someservice" 
+    exit
+fi
+
+LOCAL_PATH="/home/core/local/$1/$1.service"
+DATA_PATH="/home/core/data/$1/$1.service"
+SERVICE_PATH="/home/core/docker/$1/$1.service"
+
+if [ -f "$LOCAL_PATH" ];then
+    sudo cp -rfp "$LOCAL_PATH" "/etc/systemd/system/$1.service"
+elif [ -f "$DATA_PATH" ];then
+    sudo cp -rfp "$DATA_PATH" "/etc/systemd/system/$1.service"
+else
+    sudo cp -rfp "$SERVICE_PATH" "/etc/systemd/system/$1.service"
+fi 
+
+sudo systemctl daemon-reload && sudo systemctl enable $1 && sudo systemctl restart $1 &
+

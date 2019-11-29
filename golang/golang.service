@@ -1,0 +1,23 @@
+[Unit]
+Description=golang
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop golang
+ExecStartPre=-/usr/bin/docker kill golang
+ExecStartPre=-/usr/bin/docker rm golang
+ExecStartPre=-/home/core/docker/shell/install_fleetctl golang
+ExecStartPre=-/usr/bin/docker network create nginx-network
+ExecStart=/usr/bin/docker run --name golang --net nginx-network -v /home/core/data/golang:/go/src wenshunbiao/golang sh -c "cd coinserver && go build -v main.go && ./main"
+ExecStop=/usr/bin/docker stop golang
+ExecStop=/usr/bin/docker kill golang
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true

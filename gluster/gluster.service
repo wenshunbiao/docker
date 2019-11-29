@@ -1,0 +1,21 @@
+[Unit]
+Description=gluster
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop gluster
+ExecStartPre=-/usr/bin/docker kill gluster
+ExecStartPre=-/usr/bin/docker rm gluster
+ExecStartPre=/usr/sbin/modprobe nfs
+ExecStartPre=/usr/sbin/modprobe nfsd
+ExecStart=/usr/bin/docker run --name gluster -e SERVER_NAME=master.hadoop.com,slave1.hadoop.com,slave2.hadoop.com,slave3.hadoop.com --net=host --privileged=true -v /home/core/data1:/gluster -v /home/core/docker/gluster/conf/init.sh:/init.sh -v /home/core/.gluster:/var/lib/glusterd ivories/gluster:1.0 /init.sh
+ExecStop=/usr/bin/docker stop gluster
+ExecStop=/usr/bin/docker kill gluster
+
+[Install]
+WantedBy=multi-user.target
+

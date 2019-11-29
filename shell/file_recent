@@ -1,0 +1,23 @@
+#!/bin/bash
+echo "file_recent ext hour"
+
+FILE_EXT="*"
+#$( ('${1}' != '' ? '*.${1}' : '*' ) )
+FILE_HOUR=3600
+
+if [ "$1" != "" ]
+then
+    FILE_EXT="*.$1"
+fi
+
+if [ "$1" == "all" ]
+then
+    FILE_EXT="*"
+fi
+
+if [ "$2" != "" ]
+then
+    FILE_HOUR="$2"
+fi
+
+sudo find $(pwd) -name "$FILE_EXT" -type f -mmin -$FILE_HOUR

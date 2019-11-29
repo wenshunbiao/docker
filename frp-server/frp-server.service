@@ -1,0 +1,18 @@
+[Unit]
+Description=frp-server
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop frp-server
+ExecStartPre=-/usr/bin/docker kill frp-server
+ExecStartPre=-/usr/bin/docker rm frp-server
+ExecStart=/usr/bin/docker run --name frp-server --net=host -v /home/core/data/frp-server:/etc/frp wenshunbiao/frp /frps -c /etc/frp/frps.ini
+ExecStop=/usr/bin/docker stop frp-server
+ExecStop=/usr/bin/docker kill frp-server
+
+[Install]
+WantedBy=multi-user.target

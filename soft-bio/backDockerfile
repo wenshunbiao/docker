@@ -1,0 +1,32 @@
+FROM ivories/java-oracle:1.0
+
+RUN apk update \
+  && apk add ca-certificates curl \
+  && curl --silent \
+    --location https://github.com/sgerrand/alpine-pkg-R/releases/download/v3.2.3-r0/R-3.2.3-r0.apk --output /var/cache/apk/R-3.2.3-r0.apk \
+    --location https://github.com/sgerrand/alpine-pkg-R/releases/download/v3.2.3-r0/R-dev-3.2.3-r0.apk --output /var/cache/apk/R-dev-3.2.3-r0.apk \
+    --location https://github.com/sgerrand/alpine-pkg-R/releases/download/v3.2.3-r0/R-doc-3.2.3-r0.apk --output /var/cache/apk/R-doc-3.2.3-r0.apk \
+  && apk add --allow-untrusted \
+    /var/cache/apk/R-3.2.3-r0.apk \
+    /var/cache/apk/R-dev-3.2.3-r0.apk \
+    /var/cache/apk/R-doc-3.2.3-r0.apk \
+  && rm -fr /var/cache/apk/*
+
+RUN apk add --update bash \
+    python \
+    py-pip && \
+    pip install supervisor && \
+    rm -rf /var/cache/apk/*
+
+RUN wget http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.5.zip && \
+    unzip fastqc_v0.11.5.zip && mv FastQC /opt && rm fastqc_v0.11.5.zip \
+    && apk update \
+    && apk add perl libxrender libxext libxtst \
+    && rm -rf /var/cache/apk/* \
+    && chmod 750 /opt/FastQC/fastqc \
+    && ln -s /opt/FastQC/fastqc /usr/bin/fastqc
+
+#RUN echo "export TERM=xterm" >> /root/.bashrc
+#RUN echo "export DISPLAY=:0.0" >> /root/.bashrc
+
+CMD ["/bin/bash"]

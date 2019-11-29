@@ -1,0 +1,3 @@
+#!/bin/bash
+sudo mkdir -p ~/data/httrack
+docker run -it --rm -v ~/data/httrack:/root/websites ivories/httrack:1.0

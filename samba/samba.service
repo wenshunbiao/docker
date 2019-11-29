@@ -1,0 +1,16 @@
+[Unit]
+Description=samba
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill samba
+ExecStartPre=-/usr/bin/docker rm samba
+ExecStart=/usr/bin/docker run --name samba -p 139:139 -p 445:445 -v /home/core/data/samba/smb.conf:/etc/samba/smb.conf -v /home/core/data:/data ivories/samba:1.0
+ExecStop=/usr/bin/docker kill samba
+
+[Install]
+WantedBy=multi-user.target

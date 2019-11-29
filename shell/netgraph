@@ -1,0 +1,4 @@
+#!/bin/bash
+
+docker run -it --rm --net=host ivories/netgraph netgraph -i eth0 -p 19000
+

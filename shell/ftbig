@@ -1,0 +1,32 @@
+#! /bin/bash
+
+n=10
+d="."
+
+while getopts "n:d:h" opt
+do 
+  case "$opt" in
+    h)
+      cat<<EOF
+    usage:
+        Find the bigger files
+
+    -h       Help
+    -n num   Display the top num items, default num=10
+    -d dir   Execute directory, default current directory
+EOF
+    exit 0
+    ;;
+    n)
+    n=$OPTARG
+    ;;
+    d)
+    d="$OPTARG"
+    ;;
+    ?)
+      exit 1
+    ;;
+  esac
+done
+
+du -xk ${d} | sort -rn | head -n ${n} | awk '{printf "%-8d %-16.16s %s\n", NR, $1/1024/1024 " G", $2}'

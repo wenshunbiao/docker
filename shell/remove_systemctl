@@ -1,0 +1,11 @@
+#! /bin/bash
+
+if [ $1 ]
+then
+    sudo systemctl stop $1
+    sudo systemctl disable $1
+    sudo systemctl daemon-reload
+    sudo rm /etc/systemd/system/$1.service
+else
+    echo remove_systemctl someservice
+fi

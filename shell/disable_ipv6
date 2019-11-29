@@ -1,0 +1,9 @@
+#!/bin/bash
+
+sudo mount /dev/sda6 /boot
+
+cat > /home/core/grub.cfg << EOF
+set linux_append="\$linux_append ipv6.disable=1"
+EOF
+
+sudo mv /home/core/grub.cfg /boot/

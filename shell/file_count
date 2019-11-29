@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo ls -lR| grep "^-" | wc -l

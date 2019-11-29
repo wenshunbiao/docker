@@ -1,0 +1,12 @@
+[Unit]
+Description=autorun_etcd2
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=0
+ExecStart=/home/core/docker/shell/autorun_etcd2
+
+[Install]
+WantedBy=multi-user.target
+

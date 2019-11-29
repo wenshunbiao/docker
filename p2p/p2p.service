@@ -1,0 +1,20 @@
+[Unit]
+Description=p2p
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop p2p
+ExecStartPre=-/usr/bin/docker kill p2p
+ExecStartPre=-/usr/bin/docker rm p2p
+ExecStartPre=-/usr/bin/docker network create nginx-network
+ExecStart=/usr/bin/docker run --name p2p -p 80:8080 -v /home/core/data/p2p:/opt/tomcat/webapps ivories/p2p /opt/tomcat/bin/catalina.sh run
+ExecStop=/usr/bin/docker stop p2p
+ExecStop=/usr/bin/docker kill p2p
+
+[Install]
+WantedBy=multi-user.target
+

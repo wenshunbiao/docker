@@ -1,0 +1,9 @@
+#! /bin/bash
+
+if [ $2 ]
+then
+    docker exec -it $*
+else
+    docker exec -it $1 bash
+fi
+

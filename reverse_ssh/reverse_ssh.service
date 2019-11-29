@@ -1,0 +1,20 @@
+[Unit]
+Description=reverse_ssh
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop reverse_ssh
+ExecStartPre=-/usr/bin/docker kill reverse_ssh
+ExecStartPre=-/usr/bin/docker rm reverse_ssh
+ExecStartPre=-/home/core/docker/shell/install_fleetctl reverse_ssh
+ExecStart=/usr/bin/docker run --name reverse_ssh -e ROOT_PASS=yellow -p 53333:22 -p 51080:1080 ivories/reverse_ssh:1.0
+ExecStop=/usr/bin/docker stop reverse_ssh
+ExecStop=/usr/bin/docker kill reverse_ssh
+
+[Install]
+WantedBy=multi-user.target
+

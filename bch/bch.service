@@ -1,0 +1,17 @@
+[Unit]
+Description=bch
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop bch
+ExecStartPre=-/usr/bin/docker kill bch
+ExecStartPre=-/usr/bin/docker rm bch
+ExecStart=/usr/bin/docker run --name=bch -p 10015:80 -v /home/core/data/bch/conf.d:/etc/nginx/conf.d  -v /home/core/data/bch:/bch  ivories/bch 
+ExecStop=/usr/bin/docker stop bch
+
+[Install]
+WantedBy=multi-user.target

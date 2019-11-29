@@ -1,0 +1,18 @@
+[Unit]
+Description=btc
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop btc
+ExecStartPre=-/usr/bin/docker kill btc
+ExecStartPre=-/usr/bin/docker rm btc
+ExecStart=/usr/bin/docker run --name=btc -p 10001:8332 -v /home/core/data/btc:/root/.bitcoin ivories/btc
+ExecStop=/usr/bin/docker stop btc
+
+[Install]
+WantedBy=multi-user.target
+

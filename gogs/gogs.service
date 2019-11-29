@@ -1,0 +1,16 @@
+[Unit]
+Description=gogs
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill gogs
+ExecStartPre=-/usr/bin/docker rm gogs
+ExecStart=/usr/bin/docker run --name gogs -p 333:22 -p 3000:3000 -v /home/core/data/gogs:/data ivories/gogs:1.0
+ExecStop=/usr/bin/docker kill gogs
+
+[Install]
+WantedBy=multi-user.target

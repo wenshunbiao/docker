@@ -1,0 +1,3 @@
+#!/bin/bash
+docker rm `docker ps -a|grep Exited|awk '{print $1}'`
+docker images|grep none|awk '{print $3}'|xargs docker rmi

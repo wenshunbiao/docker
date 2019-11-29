@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker run --rm -it -e "TERM=xterm-256color" -v "$PWD":/work -w /work ivories/w3m w3m $*

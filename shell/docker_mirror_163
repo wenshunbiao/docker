@@ -1,0 +1,9 @@
+#!/bin/bash
+
+sudo tee /etc/docker/daemon.json > /dev/null << 'EOF'
+{
+  "registry-mirrors": ["http://hub-mirror.c.163.com"]
+}
+EOF
+
+s docker

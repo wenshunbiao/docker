@@ -1,0 +1,21 @@
+[Unit]
+Description=nginx
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop nginx
+ExecStartPre=-/usr/bin/docker kill nginx
+ExecStartPre=-/usr/bin/docker rm nginx
+ExecStartPre=-/home/core/docker/shell/install_fleetctl nginx
+ExecStartPre=-/usr/bin/docker network create nginx-network
+ExecStart=/usr/bin/docker run --name nginx --net nginx-network -p 80:80 -p 443:443 -v /home/core/data/nginx:/etc/nginx -v /home/core/data/www:/www ivories/nginx
+ExecStop=/usr/bin/docker stop nginx
+ExecStop=/usr/bin/docker kill nginx
+
+[Install]
+WantedBy=multi-user.target
+

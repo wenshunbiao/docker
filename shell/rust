@@ -1,0 +1,11 @@
+#!/bin/bash
+
+docker stop cargo 1>/dev/null 2>/dev/null
+docker rm cargo 1>/dev/null 2>/dev/null
+
+#RUSTUP_USTC_MIRRORS='-e RUSTUP_DIST_SERVER=http://mirrors.ustc.edu.cn/rust-static -e RUSTUP_UPDATE_ROOT=http://mirrors.ustc.edu.cn/rust-static/rustup'
+
+docker run --name cargo -it ${RUSTUP_USTC_MIRRORS} -e "PATH=/root/.cargo/bin:/usr/local/cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" -e "CARGO_HOME=/root/.cargo" -e "RUSTUP_HOME=/root/.cargo" -e "TERM=xterm-256color" --net=host -e USER=root --user "root":"root" -v /home/core/data/rust/cargo:/root/.cargo -v "$PWD":/data/rust -w /data/rust ivories/rust $*
+
+docker stop cargo 1>/dev/null 2>/dev/null
+docker rm cargo 1>/dev/null 2>/dev/null

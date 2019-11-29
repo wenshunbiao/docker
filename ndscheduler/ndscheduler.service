@@ -1,0 +1,20 @@
+[Unit]
+Description=ndscheduler
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop ndscheduler
+ExecStartPre=-/usr/bin/docker kill ndscheduler
+ExecStartPre=-/usr/bin/docker rm ndscheduler
+ExecStartPre=-/usr/bin/docker network create nginx-network
+ExecStart=/usr/bin/docker run --name ndscheduler -p 7777:80 -v /home/core/data/ndscheduler/conf.d:/etc/nginx/conf.d -v /home/core/data/ndscheduler:/ndscheduler ivories/ndscheduler 
+ExecStop=/usr/bin/docker stop ndscheduler
+ExecStop=/usr/bin/docker kill ndscheduler
+
+[Install]
+WantedBy=multi-user.target
+

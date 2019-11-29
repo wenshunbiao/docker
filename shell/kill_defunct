@@ -1,0 +1,5 @@
+#!/bin/bash
+
+#ps -e -o ppid,stat | grep Z | cut -d" " -f2 | sudo xargs kill -9
+sudo kill -HUP `ps -A -ostat,ppid | grep -e '^[Zz]' | awk '{print $2}'`
+

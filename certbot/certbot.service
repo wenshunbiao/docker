@@ -1,0 +1,19 @@
+[Unit]
+Description=certbot
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop certbot
+ExecStartPre=-/usr/bin/docker kill certbot
+ExecStartPre=-/usr/bin/docker rm certbot
+ExecStart=/usr/bin/docker run --name certbot -v /home/core/data/www/certbot/domain:/etc/letsencrypt -v /home/core/data/www/certbot/www:/www ivories/certbot
+ExecStop=/usr/bin/docker stop certbot
+ExecStop=/usr/bin/docker kill certbot
+
+[Install]
+WantedBy=multi-user.target
+

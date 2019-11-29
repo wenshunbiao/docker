@@ -1,0 +1,5 @@
+#! /bin/bash
+
+docker run -i --rm -v ~/data/www/composer:/tmp ivories/laravel composer config -g repo.packagist composer http://packagist.org
+docker run -i --rm -v $(pwd):$(pwd) -w $(pwd) ivories/laravel composer $*
+

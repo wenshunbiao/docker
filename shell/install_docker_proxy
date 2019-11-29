@@ -1,0 +1,18 @@
+#! /bin/bash
+
+sudo rm -rf /etc/systemd/system/docker.service.d/http-proxy.conf
+if [ ! $1 ];then
+  echo "install_docker_proxy 192.168.1.8:1080"
+  exit
+fi
+
+sudo mkdir -p /etc/systemd/system/docker.service.d
+
+cat > http-proxy.conf << EOF
+[Service]
+Environment="HTTP_PROXY=http://$1/"
+EOF
+
+sudo mv http-proxy.conf /etc/systemd/system/docker.service.d/
+sudo systemctl daemon-reload
+sudo systemctl restart docker

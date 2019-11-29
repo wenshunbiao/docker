@@ -1,0 +1,19 @@
+[Unit]
+Description=doge
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop doge
+ExecStartPre=-/usr/bin/docker kill doge
+ExecStartPre=-/usr/bin/docker rm doge
+ExecStart=/usr/bin/docker run --name doge --net=host -v /home/core/data/doge:/dogecoin/.dogecoin ivories/doge
+ExecStop=/usr/bin/docker stop doge
+ExecStop=/usr/bin/docker kill doge
+
+[Install]
+WantedBy=multi-user.target
+

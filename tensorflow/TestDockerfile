@@ -1,0 +1,10 @@
+FROM alpine:3.5
+
+RUN apk add --no-cache python3 bash ca-certificates && rm -rf /var/cache/apk/* 
+
+RUN pip3 --no-cache-dir install --upgrade pip
+
+RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
+
+RUN apk add --no-cache build-base python3-dev && pip3 --no-cache-dir install -U https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.0.1-cp35-cp35m-linux_x86_64.whl && apk del build-base python3-dev && rm -rf /var/cache/apk/*
+

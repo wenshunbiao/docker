@@ -1,0 +1,19 @@
+[Unit]
+Description=resilio
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop resilio
+ExecStartPre=-/usr/bin/docker kill resilio
+ExecStartPre=-/usr/bin/docker rm resilio
+ExecStart=/usr/bin/docker run --name resilio -p 8888:8888 -p 55555 -v /resilio:/mnt/sync ivories/resilio:1.0
+ExecStop=/usr/bin/docker stop resilio
+ExecStop=/usr/bin/docker kill resilio
+
+[Install]
+WantedBy=multi-user.target
+

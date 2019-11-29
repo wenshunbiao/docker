@@ -1,0 +1,15 @@
+[Unit]
+Description=autorun_fleet
+
+After=autorun_etcd2.service
+Requires=autorun_etcd2.service
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=0
+ExecStart=/home/core/docker/shell/autorun_fleet
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,7 @@
+Port 2122
+ListenAddress 0.0.0.0
+PermitRootLogin yes
+AuthorizedKeysFile	.ssh/authorized_keys
+PasswordAuthentication no
+UsePrivilegeSeparation no		# Default for new installations.
+Subsystem	sftp	/usr/lib/ssh/sftp-server

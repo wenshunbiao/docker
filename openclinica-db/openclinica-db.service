@@ -1,0 +1,19 @@
+[Unit]
+Description=openclinica-db
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop openclinica-db
+ExecStartPre=-/usr/bin/docker kill openclinica-db
+ExecStartPre=-/usr/bin/docker rm openclinica-db
+ExecStartPre=-/usr/bin/docker network create openclinica-nw
+ExecStart=/usr/bin/docker run --name openclinica-db --net openclinica-nw -v /home/core/local/openclinica/database:/var/lib/postgresql/data ivories/openclinica-db
+ExecStop=/usr/bin/docker stop openclinica-db
+ExecStop=/usr/bin/docker kill openclinica-db
+
+[Install]
+WantedBy=multi-user.target
+

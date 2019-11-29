@@ -1,0 +1,23 @@
+#! /bin/bash
+
+sudo touch /home/core/.profile
+source /home/core/.profile
+source /etc/environment
+
+if [ $GIT_I ]
+then
+for ((i=0;i<$GIT_I;i++))
+do
+    if [ "${GIT_DIR[i]}" != "" ]
+    then
+        cd ${GIT_DIR[i]};
+        sudo git pull origin master
+    fi
+done
+fi
+
+#git update docker
+cd /home/core/docker/
+sudo git pull origin master
+
+

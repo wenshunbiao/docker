@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ $1 ]
+then
+    sudo mkdir $2
+    cd $2
+    sudo git init
+    sudo git remote add origin ssh://root@$1:33/git/$2.git
+    sudo git pull origin master
+else
+    echo "git_init domain repository"
+fi

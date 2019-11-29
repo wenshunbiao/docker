@@ -1,0 +1,22 @@
+[Unit]
+Description=xwiki
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop xwiki
+ExecStartPre=-/usr/bin/docker kill xwiki
+ExecStartPre=-/usr/bin/docker rm xwiki
+ExecStart=/usr/bin/docker run --name xwiki -v /home/core/data/xwiki:/usr/local/xwiki -e DB_USER=root -e DB_PASSWORD=yellow -e DB_DATABASE=xwiki -e DB_HOST=mysql -p 8080:8080 ivories/xwiki
+ExecStop=/usr/bin/docker stop xwiki
+ExecStop=/usr/bin/docker kill xwiki
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+

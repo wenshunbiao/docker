@@ -1,0 +1,16 @@
+[Unit]
+Description=ofelia
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop ofelia
+ExecStartPre=-/usr/bin/docker kill ofelia
+ExecStartPre=-/usr/bin/docker rm ofelia
+ExecStart=/usr/bin/docker run --name ofelia -v /etc/localtime:/etc/localtime -v /root:/root -v /etc/hosts:/etc/hosts -v /home/core/data/ofelia:/etc/ofelia -v /var/run/docker.sock:/var/run/docker.sock -v /home/core/data:/home/core/data ivories/ofelia
+ExecStop=/usr/bin/docker stop ofelia
+ExecStop=/usr/bin/docker kill ofelia
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,2 @@
+#! /bin/bash
+docker exec -i rsync rsync -vztorpg --timeout=300 --password-file=/etc/rsyncd.secrets $*

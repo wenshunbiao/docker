@@ -1,0 +1,23 @@
+[Unit]
+Description=usdt
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop usdt
+ExecStartPre=-/usr/bin/docker kill usdt
+ExecStartPre=-/usr/bin/docker rm usdt
+ExecStartPre=-/usr/bin/docker network create coin-network
+
+ExecStart=/usr/bin/docker run --name usdt --net coin-network -u root -p 8333:8332 -v /home/core/data/usdt:/root/.bitcoin/ wenshunbiao/usdt
+
+#/app/omnicore/bin/omnicored -startclean
+
+ExecStop=/usr/bin/docker stop usdt
+ExecStop=/usr/bin/docker kill usdt
+
+[Install]
+WantedBy=multi-user.target

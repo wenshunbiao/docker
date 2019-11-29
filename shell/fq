@@ -1,0 +1,18 @@
+#!/bin/bash
+proxy=socks5://127.0.0.1:1080 \
+http_proxy=socks5://127.0.0.1:1080 \
+https_proxy=socks5://127.0.0.1:1080 \
+ftp_proxy=socks5://127.0.0.1:1080 \
+rsync_proxy=socks5://127.0.0.1:1080 \
+all_proxy=socks5://127.0.0.1:1080 \
+no_proxy="localhost,127.0.0.1,localaddress,.localdomain.com" \
+server_proxy=socks5://127.0.0.1:1080 \
+PROXY=socks5://127.0.0.1:1080 \
+HTTP_PROXY=socks5://127.0.0.1:1080 \
+HTTPS_PROXY=socks5://127.0.0.1:1080 \
+FTP_PROXY=socks5://127.0.0.1:1080 \
+RSYNC_PROXY=socks5://127.0.0.1:1080 \
+ALL_PROXY=socks5://127.0.0.1:1080 \
+NO_PROXY="localhost,127.0.0.1,localaddress,.localdomain.com" \
+SERVER_PROXY=socks5://127.0.0.1:1080 \
+$*

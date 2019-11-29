@@ -1,0 +1,5 @@
+#!/bin/bash
+LOCAL_AREA_IP=`/home/core/docker/shell/local_area_ip`
+LOCAL_AREA_IP=`hostname`
+/usr/bin/docker network create nginx-network 2>/dev/null
+/usr/bin/docker run --name redis --net nginx-network -v /home/core/data/redis/$LOCAL_AREA_IP:/data ivories/redis

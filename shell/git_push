@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo git commit -a
+sudo git push origin master

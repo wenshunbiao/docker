@@ -1,0 +1,4 @@
+#!/bin/bash
+docker stop vpn
+docker rm vpn
+docker run -d --privileged --name vpn --net=host -p 1723:1723 -v /home/core/data/vpn/chap-secrets:/etc/ppp/chap-secrets mobtitude/vpn-pptp

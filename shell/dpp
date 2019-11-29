@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#docker ps -a --format "{{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+
+
+docker ps -a --format '{{printf "%16s %26s    %s" .Names .Status .Ports}}'

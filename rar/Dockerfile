@@ -1,0 +1,3 @@
+FROM klutchell/rar
+
+ENTRYPOINT [""]

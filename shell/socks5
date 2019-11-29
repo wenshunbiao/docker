@@ -1,0 +1,4 @@
+#!/bin/bash
+
+curl --socks5 192.168.56.101:1080 http://2019.ip138.com/ic.asp
+

@@ -1,0 +1,19 @@
+[Unit]
+Description=vnc
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop vnc
+ExecStartPre=-/usr/bin/docker kill vnc
+ExecStartPre=-/usr/bin/docker rm vnc
+ExecStart=/usr/bin/docker run -p 5900:5900 -v /home/core/data:/data -e RESOLUTION=1024x768 -e VNC_PASSWORD=yellow -e USER=core -e PASSWORD=yellow dorowu/ubuntu-desktop-lxde-vnc
+ExecStop=/usr/bin/docker stop vnc
+ExecStop=/usr/bin/docker kill vnc
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,18 @@
+[Unit]
+Description=hsr
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop hsr
+ExecStartPre=-/usr/bin/docker kill hsr
+ExecStartPre=-/usr/bin/docker rm hsr
+ExecStart=/usr/bin/docker run --name hsr -p 10006:80 -v /home/core/data/hsr/default:/etc/nginx/sites-enabled/default -v /home/core/data/wallet/hsr:/root/.hshare ivories/hsr /root/.hshare/start.sh
+ExecStop=/usr/bin/docker stop hsr
+ExecStop=/usr/bin/docker kill hsr
+
+[Install]
+WantedBy=multi-user.target

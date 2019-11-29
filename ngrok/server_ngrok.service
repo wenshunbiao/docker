@@ -1,0 +1,18 @@
+[Unit]
+Description=ngrok
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop ngrok
+ExecStartPre=-/usr/bin/docker kill ngrok
+ExecStartPre=-/usr/bin/docker rm ngrok
+ExecStart=/usr/bin/docker run --name ngrok --net=host ivories/ngrok:1.0 ngrokd -domain="your-domain-name.com" -httpAddr=":56060" -httpsAddr=":56061"
+ExecStop=/usr/bin/docker stop ngrok
+ExecStop=/usr/bin/docker kill ngrok
+
+[Install]
+WantedBy=multi-user.target
+

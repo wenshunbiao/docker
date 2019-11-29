@@ -1,0 +1,10 @@
+#! /bin/bash
+#for SERVICE_NAME in redis mysql php nginx
+#do
+#    docker pull ivories/$SERVICE_NAME:1.0
+#done
+
+
+docker ps -a | grep "Exited" | awk '{print $1 }'|xargs docker stop
+docker ps -a | grep "Exited" | awk '{print $1 }'|xargs docker rm
+docker images|grep none|awk '{print $3 }'|xargs docker rmi

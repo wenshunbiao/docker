@@ -1,0 +1,248 @@
+#!/bin/bash
+set -ex
+
+
+echo "$#"
+echo "$*"
+
+items='dash beam dcr bch usdt grin scc btc ubtc btm bsv ltc eth etc sc xmr zec ae eos neo trx xlm xrp'
+
+function check_path()
+{
+  item_path=$1
+  if [ ! -d $item_path ]
+  then
+    echo "$item_path is not exist."
+    return 0
+  fi 
+  return 1
+}
+
+function backup ()
+{
+  item=$1
+  cur_date="`date +%Y-%m-%d`" 
+  
+#  wallet_root_path="/home/core/data/wallet"
+#  if [ ! -d $wallet_root_path ]
+#  then
+#    echo "$wallet_root_path is not exist."
+#    return 0
+#  fi
+
+  root_path="/home/core/data"
+  if [ ! -d $root_path ]
+  then
+    echo "$root_path is not exist."
+    return 0
+  fi
+
+#  item_path="$wallet_root_path/$item"
+#  if [ ! -d $item_path ]
+#  then
+#    echo "$item_path is not exist."
+#    return 0
+#  fi  
+
+  backup_path="$root_path/wallet/backup"
+  mkdir -p $backup_path
+
+#  cd $item_path
+
+  echo "do backup $item"
+  case "$item" in
+    "dash")
+      item_path="$root_path/wallet/$item"
+      relative_path="./"
+      wallet_file="wallet.dat"
+
+#      zip_file="$backup_path/$item.$cur_date.$wallet_file.zip"
+#      zip -qr $zip_file $relative_path$wallet_file
+#      
+#      #unzip $zip_file -d $item_path
+#      unzip -l $zip_file
+    ;;
+  
+    "beam")
+      item_path="$root_path/wallet/$item"
+      relative_path="./wallet/"
+      wallet_file="wallet.db" 
+    ;;
+    "dcr")
+      item_path="$root_path/wallet/$item"
+      relative_path="./wallet/mainnet/"
+      wallet_file="wallet.db"
+    ;;
+    "bch")
+      item_path="$root_path/wallet/$item"
+      relative_path="./data/"
+      wallet_file="wallet.dat" 
+    ;;
+    "usdt")
+      item_path="$root_path/wallet/$item"
+      relative_path="./"
+      wallet_file="wallet.dat"
+    ;;
+    "grin")
+      item_path="$root_path/wallet/$item"
+      relative_path="./main/"
+      wallet_file="wallet_data"
+    ;;
+    "scc")
+      item_path="$root_path/wallet/$item"
+      relative_path="./wallet/"
+      wallet_file="wallet.db"
+    ;;
+    "ubtc")
+      item_path="$root_path/$item"
+      relative_path="./"
+      wallet_file="wallet.dat"
+    ;;
+    "btc")
+      item_path="$root_path/$item"
+      relative_path="./"
+      wallet_file="wallet.dat"
+    ;;
+    "zec")
+      item_path="$root_path/wallet/$item"
+      relative_path="./.zcash/"
+      wallet_file="wallet.dat"
+    ;;
+    "sc")
+      item_path="$root_path/wallet/$item"
+      relative_path="./wallet/"
+      wallet_file="wallet.db"
+    ;;
+    "btm")
+      item_path="$root_path/wallet/$item"
+      relative_path="./.bytom/data/"
+      wallet_file="wallet.db"
+    ;;
+    "ltc")
+      item_path="$root_path/wallet/$item"
+      relative_path="./"
+      wallet_file="wallet.dat"
+    ;;
+    "etc")
+      item_path="$root_path/wallet/$item"
+      relative_path="./keys/"
+      wallet_file="classic"
+    ;;
+    "eth")
+      item_path="$root_path/wallet/$item"
+      relative_path="./keys/"
+      wallet_file="keystore"
+    ;;
+    "bsv")
+      item_path="$root_path/wallet/$item"
+      relative_path="./"
+      wallet_file="wallet.dat"
+    ;;
+    "xmr")
+      echo "Need to find wallet file."
+      exit 0
+#      item_path="$root_path/wallet/$item"
+#      relative_path="./"
+#      wallet_file=""
+    ;;
+    "ae")
+      echo "Need to find wallet file."
+      exit 0
+#      item_path="$root_path/wallet/$item"
+#      relative_path="./"
+#      wallet_file=""    
+    ;;
+    "eos")
+      item_path="$root_path/wallet/$item"
+      relative_path="./"
+      wallet_file="wallet.dat"
+    ;;
+    "neo")
+      item_path="$root_path/wallet/$item"
+      relative_path="./"
+      wallet_file="wallet.dat"
+    ;;
+    "trx")
+      item_path="$root_path/wallet/$item"
+      relative_path="./"
+      wallet_file="wallet.dat"
+    ;;
+    "xlm")
+      echo "Need to find wallet file."
+      exit 0
+#      item_path="$root_path/wallet/$item"
+#      relative_path="./"
+#      wallet_file="wallet.dat"
+    ;;
+    "xrp")
+      item_path="$root_path/wallet/$item"
+      relative_path="./"
+      wallet_file="wallet.dat"
+    ;;
+
+
+
+
+
+
+
+
+    *)
+      
+    ;;
+
+  esac
+
+  if [ ! -d $item_path ]
+  then
+    echo "$item_path is not exist."
+    return 0
+  fi
+ 
+  cd $item_path
+  zip_file="$backup_path/$item.$cur_date.$wallet_file.zip"
+  zip -qr $zip_file $relative_path$wallet_file
+
+  #unzip $zip_file -d $item_path
+  unzip -l $zip_file
+
+  echo "$item backup done"
+  return 1
+}
+
+if [ $# -eq 0 ]
+then
+  echo "ALl start..."
+  type=0
+else
+  echo "Specified start..."
+  type=1
+fi
+
+if [ type ]
+then
+  for spec in $*
+  do 
+    for item in $items
+    do 
+      echo "${spec}=>${item}"
+      if [ $spec == $item ]
+      then 
+        backup $spec
+      fi
+    done 
+  done
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+

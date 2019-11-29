@@ -1,0 +1,2 @@
+#!/bin/bash
+docker run --name=dphp --net nginx-network -it --rm -v $(pwd):$(pwd) -w $(pwd) ivories/php php $*

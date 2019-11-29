@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ ! $1 ]
+then
+    echo "test_hardisk /home/core/data"
+    exit
+fi
+
+docker run -it --rm -v $1:/data -w /data ivories/sysbench sysbench --test=fileio --threads=16 --file-total-size=3G --file-test-mode=rndrw prepare
+
+docker run -it --rm -v $1:/data -w /data ivories/sysbench sysbench --test=fileio --threads=16 --file-total-size=3G --file-test-mode=rndrw run
+
+docker run -it --rm -v $1:/data -w /data ivories/sysbench sysbench --test=fileio --threads=16 --file-total-size=3G --file-test-mode=rndrw cleanup

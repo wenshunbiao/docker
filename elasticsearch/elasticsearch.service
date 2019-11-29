@@ -1,0 +1,25 @@
+[Unit]
+Description=elasticsearch
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop elasticsearch
+ExecStartPre=-/usr/bin/docker kill elasticsearch
+ExecStartPre=-/usr/bin/docker rm elasticsearch
+ExecStartPre=-/home/core/docker/shell/install_fleetctl elasticsearch
+ExecStartPre=/usr/sbin/sysctl -w vm.max_map_count=262144
+ExecStart=/usr/bin/docker run --name elasticsearch ivories/elasticsearch
+#-v /home/core/data/elasticsearch/config:/usr/share/elasticsearch/config -v /home/core/data/elasticsearch/data:/usr/share/elasticsearch/data
+ExecStop=/usr/bin/docker stop elasticsearch
+ExecStop=/usr/bin/docker kill elasticsearch
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+

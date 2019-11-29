@@ -1,0 +1,4 @@
+#!/bin/bash
+docker pull ivories/thunder:1.0
+docker run -d --name=thunder --net=host -v /home/core/thunder:/app/TDDOWNLOAD ivories/thunder:1.0
+docker start thunder

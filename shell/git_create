@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ "$1" == "" ]
+then
+    echo "git_create projectname"
+    exit
+fi
+
+sudo git init --bare $1.git
+/home/core/docker/shell/git_init 127.0.0.1 $1
+cd $1
+sudo cp ../README.md ./
+sudo git add README.md
+sudo git commit -mfirst -a
+sudo git push origin master
+cd ..
+sudo rm -rf $1

@@ -1,0 +1,18 @@
+[Unit]
+Description=ltc
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop ltc
+ExecStartPre=-/usr/bin/docker kill ltc
+ExecStartPre=-/usr/bin/docker rm ltc
+ExecStart=/usr/bin/docker run --name=ltc -p 10002:8332 -v /home/core/data/ltc:/root/.litecoin ivories/ltc 
+ExecStop=/usr/bin/docker stop ltc
+
+[Install]
+WantedBy=multi-user.target
+

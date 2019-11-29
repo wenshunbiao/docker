@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ ! $1 ] 
+then
+    echo "s someservice" 
+    exit
+fi
+
+journalctl -xe -u $1

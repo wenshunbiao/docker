@@ -1,0 +1,19 @@
+[Unit]
+Description=gitbook
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop gitbook
+ExecStartPre=-/usr/bin/docker kill gitbook
+ExecStartPre=-/usr/bin/docker rm gitbook
+ExecStart=/usr/bin/docker run --name gitbook -p 4000:4000 -v /home/core/data/gitbook:/gitbook ivories/gitbook
+ExecStop=/usr/bin/docker stop gitbook
+ExecStop=/usr/bin/docker kill gitbook
+
+[Install]
+WantedBy=multi-user.target
+

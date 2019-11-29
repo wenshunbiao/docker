@@ -1,0 +1,19 @@
+[Unit]
+Description=thunder
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop thunder
+ExecStartPre=-/usr/bin/docker kill thunder
+ExecStartPre=-/usr/bin/docker rm thunder
+ExecStart=/usr/bin/docker run --name thunder -v /home/core/thunder:/app/TDDOWNLOAD ivories/thunder:1.0
+ExecStop=/usr/bin/docker stop thunder
+ExecStop=/usr/bin/docker kill thunder
+
+[Install]
+WantedBy=multi-user.target
+

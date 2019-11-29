@@ -1,0 +1,16 @@
+[Unit]
+Description=psocksd
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill psocksd
+ExecStartPre=-/usr/bin/docker rm psocksd
+ExecStart=/usr/bin/docker run --name psocksd -p 9050:9050 ivories/psocksd:1.0 php /psocksd-0.3.5/bin/psocksd socks5://test:test@*:9050
+ExecStop=/usr/bin/docker kill psocksd
+
+[Install]
+WantedBy=multi-user.target

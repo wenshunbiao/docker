@@ -1,0 +1,20 @@
+[Unit]
+Description=dante
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill dante
+ExecStartPre=-/usr/bin/docker rm dante
+ExecStart=/usr/bin/docker run --name dante -p 18080:18080 -v /home/core/data/dante/sockd.conf:/etc/sockd.conf -v /home/core/data/dante/passwd:/etc/passwd -v /home/core/data/dante/shadow:/etc/shadow ivories/dante:1.0
+ExecStop=/usr/bin/docker kill dante
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+

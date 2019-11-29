@@ -1,0 +1,7 @@
+
+if [ "$1" != "" ]
+then
+  docker stop $* |xargs docker rm 
+else
+  docker ps -a  | awk '{if($0 ~ /Exited/){print $1}}' |xargs docker stop |xargs docker rm
+fi

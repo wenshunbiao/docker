@@ -1,0 +1,22 @@
+[Unit]
+Description=confluence
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop confluence
+ExecStartPre=-/usr/bin/docker kill confluence
+ExecStartPre=-/usr/bin/docker rm confluence
+ExecStart=/usr/bin/docker run --name confluence -v /home/core/data/confluence:/var/atlassian/application-data/confluence -p 8090:8090 -p 8091:8091 ivories/confluence
+ExecStop=/usr/bin/docker stop confluence
+ExecStop=/usr/bin/docker kill confluence
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+

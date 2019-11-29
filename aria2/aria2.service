@@ -1,0 +1,19 @@
+[Unit]
+Description=aria2
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=3
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop aria2
+ExecStartPre=-/usr/bin/docker kill aria2
+ExecStartPre=-/usr/bin/docker rm aria2
+ExecStart=/usr/bin/docker run --name aria2 --net=host -v /home/core/aria2:/home/aria2/ -v /home/core/data/:/data ivories/aria2 aria2c -V -d /data/www/ --seed-ratio=9 --bt-enable-lpd=true --follow-torrent=mem https://download.com/Windows/a.rar.torrent
+ExecStop=/usr/bin/docker stop aria2
+ExecStop=/usr/bin/docker kill aria2
+
+[Install]
+WantedBy=multi-user.target
+

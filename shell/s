@@ -1,0 +1,38 @@
+#!/bin/bash
+
+#ss $1
+/home/core/docker/shell/ss $1
+exit
+
+if [ ! $1 ] 
+then
+    echo "s someservice" 
+    exit
+fi
+
+fleetctl stop $1
+fleetctl destroy $1
+
+SERVICE_PATH="/home/core/data/$1/$1.service"
+DOCKER_SERVICE_PATH="/home/core/docker/$1/$1.service"
+
+if [ $2 ]
+then
+    SERVICE_PATH="/home/core/docker/$1/$1.service"
+fi
+
+if [ ! -f "$DOCKER_SERVICE_PATH" ]
+then
+    fleetctl submit $1.service
+    fleetctl start $1
+    exit 0
+fi
+
+if [ ! -f "$SERVICE_PATH" ]
+then
+    sudo cp -rfp $DOCKER_SERVICE_PATH $SERVICE_PATH
+fi
+
+fleetctl submit $SERVICE_PATH
+
+fleetctl start $1

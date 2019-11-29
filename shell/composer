@@ -1,0 +1,3 @@
+#! /bin/bash
+
+docker run -it --rm -v /home/core/data/www/composer:/tmp -v $(pwd):$(pwd) -w $(pwd) ivories/laravel sh -c "composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ && composer $*"

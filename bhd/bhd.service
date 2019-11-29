@@ -1,0 +1,17 @@
+[Unit]
+Description=bhd
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop bhd
+ExecStartPre=-/usr/bin/docker kill bhd
+ExecStartPre=-/usr/bin/docker rm bhd
+ExecStart=/usr/bin/docker run --name=bhd -p 8733:8733 -v /home/core/data/bhd:/root/.btchd wenshunbiao/bhd 
+ExecStop=/usr/bin/docker stop bhd
+
+[Install]
+WantedBy=multi-user.target

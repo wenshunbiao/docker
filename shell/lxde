@@ -1,0 +1,2 @@
+#!/bin/bash
+docker run -d --name lxde -p 192.168.3.123:6080:6079 -v /home/core/.ssh/resolv.conf:/etc/resolv.conf -e HTTP_PASSWORD=yellow dorowu/ubuntu-desktop-lxde-vnc

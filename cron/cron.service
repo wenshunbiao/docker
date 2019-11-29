@@ -1,0 +1,20 @@
+[Unit]
+Description=cron
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop cron
+ExecStartPre=-/usr/bin/docker kill cron
+ExecStartPre=-/usr/bin/docker rm cron
+ExecStart=/usr/bin/docker run --name cron -v /root:/root -v /etc/hosts:/etc/hosts -v /home/core/data/www:/www -v /var/run/docker.sock:/var/run/docker.sock -v /home/core/data/cron:/opt/crontab ivories/cron
+ExecStop=/usr/bin/docker stop cron
+ExecStop=/usr/bin/docker kill cron
+
+[Install]
+WantedBy=multi-user.target
+
+

@@ -1,0 +1,18 @@
+[Unit]
+Description=heapster
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop heapster
+ExecStartPre=-/usr/bin/docker kill heapster
+ExecStartPre=-/usr/bin/docker rm heapster
+ExecStart=/usr/bin/docker run --name=heapster -p 8082:8082 --net=host ivories/heapster:1.0 --source=kubernetes:http://192.168.1.112:8080?inClusterConfig=false&useServiceAccount=false --sink=influxdb:http://192.168.1.112:8086
+ExecStop=/usr/bin/docker stop heapster
+ExecStop=/usr/bin/docker kill heapster
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,18 @@
+[Unit]
+Description=dash
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop dash
+ExecStartPre=-/usr/bin/docker kill dash
+ExecStartPre=-/usr/bin/docker rm dash
+ExecStart=/usr/bin/docker run --name=dash -p 10025:9998 -v /home/core/data/wallet/dash:/root/.dashcore ivories/dash /dashcore/bin/dashd --conf=/root/.dashcore/dash.conf
+ExecStop=/usr/bin/docker stop dash
+
+[Install]
+WantedBy=multi-user.target
+

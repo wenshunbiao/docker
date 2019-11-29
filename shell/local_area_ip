@@ -1,0 +1,12 @@
+#!/bin/bash
+
+ETH_PARAM=$1
+
+if [ "$ETH_PARAM" = "" ]
+then
+    ETH_PARAM="eth0"
+fi
+
+LOCAL_AREA_IP=`ifconfig $ETH_PARAM | grep "inet " | awk '{print$2}'`
+
+echo $LOCAL_AREA_IP

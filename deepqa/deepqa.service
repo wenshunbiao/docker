@@ -1,0 +1,18 @@
+[Unit]
+Description=deepqa
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop deepqa
+ExecStartPre=-/usr/bin/docker kill deepqa
+ExecStartPre=-/usr/bin/docker rm deepqa
+ExecStart=/usr/bin/docker run --name=deepqa -p 8000:8000 --link redis:redis -v /home/core/data/deepqa/samples:/DeepQA/data/samples -v /home/core/data/:/data ivories/deepqa:1.0
+ExecStop=/usr/bin/docker stop deepqa
+ExecStop=/usr/bin/docker kill deepqa
+
+[Install]
+WantedBy=multi-user.target

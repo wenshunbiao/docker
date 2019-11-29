@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/usr/bin/sudo -E env "PATH=/home/core/docker/shell:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin:$PATH" $*

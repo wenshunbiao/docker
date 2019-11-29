@@ -1,0 +1,19 @@
+[Unit]
+Description=xmr
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop xmr
+ExecStartPre=-/usr/bin/docker kill xmr
+ExecStartPre=-/usr/bin/docker rm xmr
+ExecStart=/usr/bin/docker run --name=xmr -p 10021:80 -v /home/core/data/wallet/xmr:/root/.bitmonero -v /home/core/data/wallet/xmr:/root/wallet -u root ivories/xmr:test
+
+ExecStop=/usr/bin/docker stop xmr
+
+[Install]
+WantedBy=multi-user.target
+

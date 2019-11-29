@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ ! $1 ]
+then
+    echo "command: dante_config url"
+    echo "sudo wget http://server/config"
+    exit
+fi
+
+cd ~/data/dante
+sudo curl -o passwd ${1}passwd
+sudo curl -o shadow ${1}shadow

@@ -1,0 +1,18 @@
+[Unit]
+Description=gitlab
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill gitlab
+ExecStartPre=-/usr/bin/docker rm gitlab
+ExecStartPre=-/usr/bin/docker network create nginx-network
+ExecStart=/usr/bin/docker run -h hostname.com --name gitlab --net=nginx-network -p 80:80 -p 22:22 -v /home/core/data/gitlab/etc:/etc/gitlab -v /home/core/data/gitlab/opt:/var/opt/gitlab -v /home/core/data/gitlab/etc:/var/log/gitlab gitlab/gitlab-ce
+ExecStop=/usr/bin/docker kill gitlab
+
+[Install]
+WantedBy=multi-user.target
+

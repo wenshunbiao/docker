@@ -1,0 +1,21 @@
+[Unit]
+Description=puppeteer-proxy
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop puppeteer-proxy
+ExecStartPre=-/usr/bin/docker kill puppeteer-proxy
+ExecStartPre=-/usr/bin/docker rm puppeteer-proxy
+
+ExecStart=/usr/bin/docker run --name puppeteer-proxy -p 3000:3000 -v /home/core/data/puppeteer-proxy:/root/.puppeteer-proxy  ivories/puppeteer-proxy
+
+ExecStop=/usr/bin/docker stop puppeteer-proxy
+ExecStop=/usr/bin/docker kill puppeteer-proxy
+
+[Install]
+WantedBy=multi-user.target
+

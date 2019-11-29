@@ -1,0 +1,19 @@
+<configuration>
+    <property>
+        <name>dfs.replication</name>
+        <value>1</value>
+    </property>
+    <property>
+        <name>dfs.namenode.datanode.registration.ip-hostname-check</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>dfs.http.address</name>
+        <value>HOSTNAME_HADOOP:50070</value>
+    </property>
+    <property>
+        <name>dfs.namenode.secondary.http-address</name>
+        <value>HOSTNAME_HADOOP:50090</value>
+    </property>
+</configuration>
+

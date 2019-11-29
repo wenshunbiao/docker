@@ -1,0 +1,19 @@
+[Unit]
+Description=terraform
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop terraform
+ExecStartPre=-/usr/bin/docker kill terraform
+ExecStartPre=-/usr/bin/docker rm terraform
+ExecStart=/usr/bin/docker run --name terraform -v /home/core/data/terraform:/terraform -v /home/core/.ssh:/root/.ssh ivories/terraform
+ExecStop=/usr/bin/docker stop terraform
+ExecStop=/usr/bin/docker kill terraform
+
+[Install]
+WantedBy=multi-user.target
+

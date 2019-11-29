@@ -1,0 +1,18 @@
+[Unit]
+Description=eth
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop eth
+ExecStartPre=-/usr/bin/docker kill eth
+ExecStartPre=-/usr/bin/docker rm eth
+ExecStart=/usr/bin/docker run --name=eth -u root -p 10003:80 -v /home/core/data/eth/conf.d:/etc/nginx/conf.d -v /home/core/data/eth:/root/.local/share/io.parity.ethereum ivories/eth
+ExecStop=/usr/bin/docker stop eth
+
+[Install]
+WantedBy=multi-user.target
+

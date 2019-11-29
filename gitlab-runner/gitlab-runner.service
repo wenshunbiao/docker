@@ -1,0 +1,17 @@
+[Unit]
+Description=gitlab-runner
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill gitlab-runner
+ExecStartPre=-/usr/bin/docker rm gitlab-runner
+ExecStartPre=-/usr/bin/docker network create nginx-network
+ExecStart=/usr/bin/docker run --name gitlab-runner --net=nginx-network -v /root/.ssh:/root/.ssh -v /home/core/data/www:/www -v /etc/hosts:/etc/hosts -v /var/run/docker.sock:/var/run/docker.sock -v /home/core/data/gitlab-runner/config:/etc/gitlab-runner:Z gitlab/gitlab-runner run --user=root --working-directory=/home/gitlab-runner
+ExecStop=/usr/bin/docker kill gitlab-runner
+
+[Install]
+WantedBy=multi-user.target

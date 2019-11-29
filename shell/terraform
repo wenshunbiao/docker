@@ -1,0 +1,5 @@
+#!/bin/bash
+/usr/bin/docker run -d --name terraform -v /home/core/data/terraform:/root -v /home/core/.ssh:/root/.ssh ivories/terraform tail -f /usr/bin/tty
+d terraform
+p terraform 2>/dev/null &
+

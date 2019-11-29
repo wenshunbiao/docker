@@ -1,0 +1,20 @@
+[Unit]
+Description=schedule
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop schedule
+ExecStartPre=-/usr/bin/docker kill schedule
+ExecStartPre=-/usr/bin/docker rm schedule
+ExecStart=/usr/bin/docker run --name schedule -v /home/core/data/schedule:/schedule ivories/schedule
+ExecStop=/usr/bin/docker stop schedule
+ExecStop=/usr/bin/docker kill schedule
+
+[Install]
+WantedBy=multi-user.target
+
+

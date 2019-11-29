@@ -1,0 +1,34 @@
+#!/bin/bash
+
+source /home/core/.profile
+source /etc/environment
+
+mkdir -p /home/core/openssl
+cd /home/core/openssl
+cp -rfp /home/core/data/kubernetes/ssl/* /home/core/openssl/
+
+cat > openssl.cnf << EOF
+[req]
+req_extensions = v3_req
+distinguished_name = req_distinguished_name
+[req_distinguished_name]
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectAltName = @alt_names
+[alt_names]
+IP.1 = ${LAN_IP}
+EOF
+
+IP_LAST=`echo "${LAN_IP}" | cut -d "." -f4`
+
+openssl genrsa -out core${IP_LAST}-worker-key.pem 2048
+openssl req -new -key core${IP_LAST}-worker-key.pem -out core${IP_LAST}-worker.csr -subj "/CN=core" -config openssl.cnf 
+openssl x509 -req -in core${IP_LAST}-worker.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out core${IP_LAST}-worker.pem -days 365 -extensions v3_req -extfile openssl.cnf
+
+sudo mkdir -p /etc/kubernetes/ssl
+sudo cp -rfp /home/core/openssl/* /etc/kubernetes/ssl/
+sudo chmod 600 /etc/kubernetes/ssl/*
+sudo chown root:root /etc/kubernetes/ssl/*
+
+rm -rf /home/core/openssl

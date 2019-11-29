@@ -1,0 +1,24 @@
+[Unit]
+Description=shadowsocks
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop shadowsocks
+ExecStartPre=-/usr/bin/docker kill shadowsocks
+ExecStartPre=-/usr/bin/docker rm shadowsocks
+ExecStart=/usr/bin/docker run --name shadowsocks -p 8388:8388/tcp -p 8388:8388/udp wenshunbiao/shadowsocks ss-server -s "0.0.0.0" \
+       -p "8388" \
+       -k "password" \
+       -m "chacha20-ietf-poly1305" \
+       -t "60" \
+       -d "8.8.8.8" \
+       -u 
+
+ExecStop=/usr/bin/docker kill shadowsocks
+
+[Install]
+WantedBy=multi-user.target

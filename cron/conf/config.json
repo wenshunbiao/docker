@@ -1,0 +1,12 @@
+[{
+"comment":"admin git update",
+"schedule":"* * * * *",
+"command":"git -C /www/admin pull",
+"container":"cron"
+
+},{"comment":"php test",
+"schedule":"* * * * *",
+"command":"php /www/test.php",
+"container":"php"
+
+}]

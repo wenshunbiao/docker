@@ -1,0 +1,85 @@
+FROM ivories/cryosparc
+
+RUN mkdir /root/cryosparc && wget http://192.168.1.112/cryosparc.tar.gz
+RUN mv cryosparc.tar.gz /root/cryosparc && cd /root/cryosparc && tar zxvf cryosparc.tar.gz
+
+WORKDIR /root/cryosparc
+
+RUN mkdir nodejs && curl https://nodejs.org/download/release/v4.6.2/node-v4.6.2-linux-x64.tar.xz > .nodejs.txz && tar -xf .nodejs.txz --directory "./nodejs" --strip-components 1 && rm .nodejs.txz
+
+RUN mkdir mongodb && curl https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.2.9.tgz > .mongodb.tgz && tar -zxf .mongodb.tgz --strip-components=1 --directory mongodb/ && rm .mongodb.tgz
+
+RUN cd cryosparc-webapp/bundle/programs/server && /root/cryosparc/nodejs/bin/npm install node-pre-gyp > npm_install.log && /root/cryosparc/nodejs/bin/npm install > npm_install.log
+
+RUN wget --no-check-certificate https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh && \
+    chmod +x Miniconda2-latest-Linux-x86_64.sh && \
+    bash Miniconda2-latest-Linux-x86_64.sh -b -p /usr/miniconda2 && \
+    rm -rf Miniconda2-latest-Linux-x86_64.sh
+
+ENV PATH /usr/miniconda2/bin:$PATH
+
+RUN apt-get install -y libpng-dev libfreetype6-dev
+
+RUN mkdir ~/.pip
+RUN echo '[global] \
+ trusted-host =  mirrors.aliyun.com \
+ index-url = http://mirrors.aliyun.com/pypi/simple' > ~/.pip/pip.conf
+
+RUN pip install --upgrade pip -i http://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com
+RUN pip install -i http://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com supervisor numpy==1.11.2 
+RUN pip install -i http://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com scipy==0.18.1 numba==0.26.0 pandas==0.18.1 numexpr==2.6.1  scikit-image==0.12.3
+
+RUN conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+RUN conda config --set show_channel_urls yes
+RUN conda install -q -y --force -c richli fftw=3.3.4
+RUN apt-get install build-essential
+RUN apt-get install gcc
+
+RUN apt-get install -y libfftw3-dev
+
+RUN pip install -i http://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com pyfftw==0.9.2
+
+RUN apt-get install -y libx11-dev
+RUN pip install -i http://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com matplotlib==1.5.1 jinja2==2.8 future==0.15.2 IPython==5.1.0 cython==0.25.1
+RUN pip install -i http://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com pylbfgs==0.2.0.3 pyyaml==3.12 diskcache==2.0.2 pymongo==3.3.1 nvidia-ml-py==7.352.0 pycrypto==2.6.1 psutil==4.4.2
+RUN pip install -i http://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com pycuda==2016.1.2 --no-cache-dir
+RUN pip install -i http://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com scikit-cuda==0.5.1
+RUN pip install -i http://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com numba==0.33.0
+RUN apt-get install net-tools
+
+RUN echo 'deb-src http://archive.ubuntu.com/ubuntu xenial main restricted #Added by software-properties \n\
+deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted \n\
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial main restricted multiverse universe #Added by software-properties \n\
+deb http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted \n\
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted multiverse universe  \n\
+deb http://mirrors.aliyun.com/ubuntu/ xenial universe \n\
+deb http://mirrors.aliyun.com/ubuntu/ xenial-updates universe \n\
+deb http://mirrors.aliyun.com/ubuntu/ xenial multiverse \n\
+deb http://mirrors.aliyun.com/ubuntu/ xenial-updates multiverse \n\
+deb http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse \n\
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse  \n\
+deb http://archive.canonical.com/ubuntu xenial partner \n\
+deb-src http://archive.canonical.com/ubuntu xenial partner \n\
+deb http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted \n\
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted multiverse universe \n\
+deb http://mirrors.aliyun.com/ubuntu/ xenial-security universe \n\
+deb http://mirrors.aliyun.com/ubuntu/ xenial-security multiverse \n\
+' > /etc/apt/sources.list
+
+RUN apt-get update
+RUN apt-get install -y expect
+RUN mkdir /output
+RUN mkdir /ssd
+
+COPY install.sh /root/cryosparc
+RUN /root/cryosparc/install.sh --license-id=
+RUN echo '#!/usr/bin/expect \n\
+set timeout 2 \n\
+spawn "cryosparc configure initial" \n\
+expect "Question 1 :" { send "yes\n" } \n\
+expect "Question 2 :" { send "no\n" } \n\
+interact \n\' > /init.sh
+
+RUN chmod -R 777 /init.sh
+
+CMD tail -f /root/cryosparc/install.sh

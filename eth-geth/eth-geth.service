@@ -1,0 +1,21 @@
+[Unit]
+Description=eth-geth
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop eth-geth
+ExecStartPre=-/usr/bin/docker kill eth-geth
+ExecStartPre=-/usr/bin/docker rm eth-geth
+ExecStartPre=-/usr/bin/docker network create coin-network
+
+ExecStart=/usr/bin/docker run --name=eth-geth --net coin-network -p 10003:80 --cap-add=NET_ADMIN --device=/dev/net/tun -v /home/core/data/eth-geth/conf.d:/etc/nginx/conf.d -v /home/core/data/eth-geth/supervisord.conf:/supervisor/supervisord.conf -v /home/core/data/eth-geth:/root wenshunbiao/eth
+
+ExecStop=/usr/bin/docker stop eth-geth
+
+[Install]
+WantedBy=multi-user.target
+

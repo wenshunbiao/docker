@@ -1,0 +1,18 @@
+[Unit]
+Description=frp-client
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop frp-client
+ExecStartPre=-/usr/bin/docker kill frp-client
+ExecStartPre=-/usr/bin/docker rm frp-client
+ExecStart=/usr/bin/docker run --name frp-client --net=host -v /home/core/data/frp-client:/etc/frp wenshunbiao/frp /frpc -c /etc/frp/frpc.ini
+ExecStop=/usr/bin/docker stop frp-client
+ExecStop=/usr/bin/docker kill frp-client
+
+[Install]
+WantedBy=multi-user.target

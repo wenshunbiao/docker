@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker ps -a --format "{{.ID}}\t{{.Names}}\t\t{{.Image}}\t\t{{.Status}}"

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ ! $1 ] 
+then
+    echo "sp someservice" 
+    exit
+fi
+
+sudo systemctl stop $1
+sudo systemctl disable $1
+
+sudo rm -rf "/etc/systemd/system/$1.service"
+sudo rm -rf "/etc/systemd/system/multi-user.target.wants/$1.service"
+
+sudo systemctl daemon-reload
+
+docker stop $1
+docker rm $1

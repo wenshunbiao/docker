@@ -1,0 +1,25 @@
+[Unit]
+Description=mysql
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop mysql
+ExecStartPre=-/usr/bin/docker kill mysql
+ExecStartPre=-/usr/bin/docker rm mysql
+ExecStartPre=-/home/core/docker/shell/install_fleetctl mysql
+ExecStartPre=-/usr/bin/docker network create nginx-network
+ExecStart=/usr/bin/docker run --name mysql --net nginx-network -p 3306:3306 -v /home/core/data/mysql:/etc/mysql -v /home/core/data/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=yellow --user=root ivories/mysql
+#ExecStart=/home/core/docker/shell/run_mysql
+ExecStop=/usr/bin/docker stop mysql
+ExecStop=/usr/bin/docker kill mysql
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+

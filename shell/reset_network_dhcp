@@ -1,0 +1,18 @@
+#! /bin/bash
+
+cd
+cat > r.yaml << EOF
+#cloud-config
+coreos:
+  units:
+    - name: static.network
+      content: |
+        [Match]
+        Name=en*
+
+        [Network]
+        DHCP=yes
+EOF
+
+sudo coreos-cloudinit --from-file=r.yaml
+rm -rf r.yaml

@@ -1,0 +1,18 @@
+[Unit]
+Description=rabbitmq
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop rabbitmq
+ExecStartPre=-/usr/bin/docker kill rabbitmq
+ExecStartPre=-/usr/bin/docker rm rabbitmq
+ExecStart=/usr/bin/docker run --hostname rabbitmq --name=rabbitmq --net=nginx-network -p 5672:5672 -p 15672:15672 -e RABBITMQ_DEFAULT_USER=guest -e RABBITMQ_DEFAULT_PASS=guest -v /home/core/data/rabbitmq:/var/lib/rabbitmq wenshunbiao/rabbitmq 
+ExecStop=/usr/bin/docker stop rabbitmq
+
+[Install]
+WantedBy=multi-user.target
+

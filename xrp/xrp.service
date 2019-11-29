@@ -1,0 +1,19 @@
+[Unit]
+Description=xrp
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop xrp
+ExecStartPre=-/usr/bin/docker kill xrp
+ExecStartPre=-/usr/bin/docker rm xrp
+ExecStart=/usr/bin/docker run --name=xrp -p 10019:80 -v /home/core/data/wallet/xrp:/var/lib/rippled ivories/xrp 
+#/opt/ripple/bin/rippled --net --conf /var/lib/rippled/rippled.cfg 
+ExecStop=/usr/bin/docker stop xrp
+
+[Install]
+WantedBy=multi-user.target
+

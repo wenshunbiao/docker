@@ -1,0 +1,18 @@
+[Unit]
+Description=tensorflow
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop tensorflow
+ExecStartPre=-/usr/bin/docker kill tensorflow
+ExecStartPre=-/usr/bin/docker rm tensorflow
+ExecStart=/usr/bin/docker run --name=tensorflow -p 6006:6006 -v /home/core/data:/data ivories/tensorflow:1.0
+ExecStop=/usr/bin/docker stop tensorflow
+ExecStop=/usr/bin/docker kill tensorflow
+
+[Install]
+WantedBy=multi-user.target

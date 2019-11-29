@@ -1,0 +1,40 @@
+#! /bin/bash
+#D:\nfs -rw -sync -no_root_squash -no_subtree_check -public -range 192.168.1.1 192.168.1.255
+#D:\nfs -range 192.168.1.1 192.168.1.255
+#sudo mount -t cifs //192.168.56.1/Ted/ ~/data -o dir_mode=0777,file_mode=0777,username=Administrator,password=
+
+sudo touch /home/core/.profile
+source /home/core/.profile
+source /etc/environment
+
+if [ ${MOUNT_I} ]
+then
+for ((i=0;i<$MOUNT_I;i++))
+do
+    if [ "${MOUNT_URL[i]}" != "" ]
+    then
+        if [ "${MOUNT_DIR[i]}" != "" ]
+        then
+            sudo mkdir -p ${MOUNT_DIR[i]}
+            sudo mount -t nfs -o rw,nolock,vers=3,tcp,retry=1 ${MOUNT_URL[i]} ${MOUNT_DIR[i]}
+            echo " sudo mount -t nfs -o rw,nolock,vers=3,tcp,retry=1 ${MOUNT_URL[i]} ${MOUNT_DIR[i]}"
+        fi
+    fi
+done
+fi
+
+if [ ${MOUNT_SAMBA_I} ]
+then
+for ((i=0;i<$MOUNT_SAMBA_I;i++))
+do
+    if [ "${MOUNT_SAMBA_URL[i]}" != "" ]
+    then
+        if [ "${MOUNT_SAMBA_DIR[i]}" != "" ]
+        then
+            sudo mkdir -p ${MOUNT_SAMBA_DIR[i]}
+            sudo mount -t cifs ${MOUNT_SAMBA_URL[i]} ${MOUNT_SAMBA_DIR[i]} -o dir_mode=0777,file_mode=0777,username=${MOUNT_SAMBA_USERNAME[i]},password=${MOUNT_SAMBA_PASSWORD[i]}
+        fi
+    fi
+done
+fi
+

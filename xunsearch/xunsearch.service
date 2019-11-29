@@ -1,0 +1,21 @@
+[Unit]
+Description=xunsearch
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop xunsearch
+ExecStartPre=-/usr/bin/docker kill xunsearch
+ExecStartPre=-/usr/bin/docker rm xunsearch
+ExecStartPre=-/usr/bin/docker network create nginx-network
+ExecStart=/usr/bin/docker run --name xunsearch --net nginx-network -v /home/core/data:/data hightman/xunsearch
+ExecStop=/usr/bin/docker stop xunsearch
+ExecStop=/usr/bin/docker kill xunsearch
+
+[Install]
+WantedBy=multi-user.target
+
+

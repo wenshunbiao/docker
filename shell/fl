@@ -1,0 +1,8 @@
+#! /bin/bash
+
+fleetctl list-units
+
+if [ $1 ]
+then
+    fleetctl status $1
+fi

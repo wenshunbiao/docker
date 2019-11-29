@@ -1,0 +1,22 @@
+[Unit]
+Description=ngrok
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop ngrok
+ExecStartPre=-/usr/bin/docker kill ngrok
+ExecStartPre=-/usr/bin/docker rm ngrok
+
+ExecStart=/usr/bin/docker run --name ngrok --net=host -v /home/core/data/ngrok/ngrok.yml:/config.yml ivories/ngrok:1.0 ngrok -log=stdout -config=/config.yml start ssh
+
+#ExecStart=/usr/bin/docker run --name ngrok --restart=unless-stopped --net=host -v /home/core/data/ngrok/ngrok.yml:/config.yml ivories/ngrok:1.0 ngrok -log=stdout -config=/config.yml start ssh
+
+ExecStop=/usr/bin/docker stop ngrok
+ExecStop=/usr/bin/docker kill ngrok
+
+[Install]
+WantedBy=multi-user.target
+

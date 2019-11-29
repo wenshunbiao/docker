@@ -1,0 +1,23 @@
+[Unit]
+Description=grin
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop grin
+ExecStartPre=-/usr/bin/docker kill grin
+ExecStartPre=-/usr/bin/docker rm grin
+#ExecStart=/usr/bin/docker run --name grin -p 13415:3415 -p 10012:3413 -p 10013:3415 -p 10014:80 -v /home/core/data/grin/grin-server.toml:/root/.grin/grin-server.toml -v /home/core/data/wallet/grin:/root/.grin/chain_data -v /home/core/data/wallet/grin/main:/root/.grin/main -v /home/core/data/grin:/grin -v /home/core/data/grin/conf.d:/etc/nginx/conf.d --entrypoint="" ivories/grin /grin/start.sh
+
+ExecStart=/usr/bin/docker run --name grin -p 10012:3413 -p 10013:3415 -p 10014:80 -v /home/core/data/wallet/grin:/root/.grin  ivories/grin
+# /start.sh
+#/root/.grin/start.sh
+ExecStop=/usr/bin/docker stop grin
+ExecStop=/usr/bin/docker kill grin
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,8 @@
+#! /bin/bash
+
+sudo systemctl start rpc-mountd
+sudo systemctl start nfsd
+
+sudo touch /etc/exports
+
+#/root/test/ 192.168.1.0/24(rw,async,no_subtree_check,no_root_squash,fsid=0)

@@ -1,0 +1,6 @@
+#! /bin/bash
+
+sudo mkdir -p /opt/bin
+sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` > docker-compose
+sudo chmod -R 777 docker-compose
+sudo mv docker-compose /opt/bin/

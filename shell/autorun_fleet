@@ -1,0 +1,14 @@
+#! /bin/bash
+
+FLEET_RUN=`/home/core/docker/shell/waitService fleet`
+
+if [ FLEET_RUN = 'false' ]
+then
+    exit 1
+fi
+
+while [ 1 ]
+do
+    sleep 100s
+done
+

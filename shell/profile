@@ -1,0 +1,7 @@
+#主NFS共享的目录
+DIR_NFS_MOUNT=172.17.8.1:/Data/Web/data
+
+#需要同步到主机的目录
+DIR_SMB_RSYNC_URL=//172.17.8.1/server_data
+DIR_SMB_RSYNC_FROM=/home/core/data
+DIR_SMB_RSYNC_TO=/home/core/server_data

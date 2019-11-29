@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm -rf /etc/docker/daemon.json
+
+s docker

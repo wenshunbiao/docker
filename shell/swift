@@ -1,0 +1,3 @@
+#!/bin/bash
+docker run -i -t --name swift ivories/swift:latest /bin/bash
+d swift

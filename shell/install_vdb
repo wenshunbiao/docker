@@ -1,0 +1,18 @@
+#! /bin/bash
+
+sudo fdisk -l
+
+echo ""
+echo "sudo fdisk /dev/vdb"
+echo "n"
+echo "p"
+echo "enter"
+echo "enter"
+echo "enter"
+echo "wq"
+
+echo "sudo fdisk -l"
+
+echo "sudo mkfs.ext4 /dev/vdb1"
+echo "sudo echo /dev/vdb1 /mnt ext4 defaults 0 0 >> /etc/fstab"
+

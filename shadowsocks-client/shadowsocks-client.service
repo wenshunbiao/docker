@@ -1,0 +1,25 @@
+[Unit]
+Description=shadowsocks-client
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop shadowsocks-client
+ExecStartPre=-/usr/bin/docker kill shadowsocks-client
+ExecStartPre=-/usr/bin/docker rm shadowsocks-client
+ExecStart=/usr/bin/docker run --name shadowsocks-client -p 1080:1080 wenshunbiao/shadowsocks ss-local -s "remote-address" \
+              -p "remote-port" \
+              -b "0.0.0.0"  \
+              -l "1080"  \
+              -m "chacha20-ietf-poly1305"      \
+              -k "remote-password"    \
+              -t "60"     \
+              -u 
+
+ExecStop=/usr/bin/docker kill shadowsocks-client
+
+[Install]
+WantedBy=multi-user.target

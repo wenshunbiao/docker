@@ -1,0 +1,7 @@
+#!/bin/bash
+
+sp $1 &
+exit
+
+fleetctl stop $1
+fleetctl destroy $1

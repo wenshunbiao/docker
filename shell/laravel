@@ -1,0 +1,3 @@
+#!/bin/bash
+p_by_name ivories/laravel 2>/dev/null
+docker run --name=laravel -it --rm --net nginx-network -p 8011:8011 -p 8010:8010 -v /root/.ssh:/root/.ssh -v ~/data/www:/www -v ~/data:/data -v ~/data/www/composer:/tmp ivories/laravel zsh

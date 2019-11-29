@@ -1,0 +1,18 @@
+[Unit]
+Description=grafana
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop grafana
+ExecStartPre=-/usr/bin/docker kill grafana
+ExecStartPre=-/usr/bin/docker rm grafana
+ExecStart=/usr/bin/docker run  --name=grafana -p 3000:3000 --net=host -e INFLUXDB_SERVICE_URL=http://192.168.1.112:8086 -e GF_AUTH_BASIC_ENABLED="false" -e GF_AUTH_ANONYMOUS_ENABLED="true" -e GF_AUTH_ANONYMOUS_ORG_ROLE="Admin" -e GF_SERVER_ROOT_URL=/ -v /var/lib/grafana:/var/lib/grafana grafana/grafana:4.2.0
+ExecStop=/usr/bin/docker stop grafana
+ExecStop=/usr/bin/docker kill grafana
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,32 @@
+#!/bin/bash
+
+if [ "$1" == "" ]
+then
+
+    docker run -it --rm -v $(pwd):$(pwd) -w $(pwd) ivories/fio fio -numjobs=1 -iodepth=128 -direct=1 -ioengine=libaio -sync=1 -rw=randread -bs=4K -size=1G -time_based -runtime=60 -name=Fio -directory=$(pwd)
+
+fi
+
+if [ "$1" == "w" ]
+then
+
+    docker run -it --rm -v $(pwd):$(pwd) -w $(pwd) ivories/fio fio -numjobs=1 -iodepth=128 -direct=1 -ioengine=libaio -sync=1 -rw=randwrite -bs=4K -size=1G -time_based -runtime=60 -name=Fio -directory=$(pwd)
+
+fi
+
+if [ "$1" == "mr" ]
+then
+
+    docker run -it --rm -v $(pwd):$(pwd) -w $(pwd) ivories/fio fio -numjobs=1 -iodepth=128 -direct=1 -ioengine=libaio -sync=1 -rw=randread -bs=1M -size=1G -time_based -runtime=60 -name=Fio -directory=$(pwd)
+
+fi
+
+if [ "$1" == "mw" ]
+then
+
+    docker run -it --rm -v $(pwd):$(pwd) -w $(pwd) ivories/fio fio -numjobs=1 -iodepth=128 -direct=1 -ioengine=libaio -sync=1 -rw=randwrite -bs=1M -size=1G -time_based -runtime=60 -name=Fio -directory=$(pwd)
+
+fi
+
+sudo /usr/bin/rm $(pwd)/Fio.0.0
+

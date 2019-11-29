@@ -1,0 +1,25 @@
+[Unit]
+Description=redis
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop redis
+ExecStartPre=-/usr/bin/docker kill redis
+ExecStartPre=-/usr/bin/docker rm redis
+ExecStartPre=-/home/core/docker/shell/install_fleetctl redis
+ExecStartPre=-/usr/bin/docker network create nginx-network
+#ExecStart=/home/core/docker/shell/run_redis
+ExecStart=/usr/bin/docker run --name redis --net nginx-network -v /home/core/data/redis:/data ivories/redis
+ExecStop=/usr/bin/docker stop redis
+ExecStop=/usr/bin/docker kill redis
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+

@@ -1,0 +1,18 @@
+[Unit]
+Description=beam-testnet
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop beam-testnet
+ExecStartPre=-/usr/bin/docker kill beam-testnet
+ExecStartPre=-/usr/bin/docker rm beam-testnet
+ExecStart=/usr/bin/docker run --name=beam-testnet -p 10022:80  -v /home/core/data/wallet/beam-master:/beam-master -v /home/core/data/wallet/beam-master/conf.d:/etc/nginx/conf.d ivories/beam-testnet 
+ExecStop=/usr/bin/docker stop beam-testnet
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,24 @@
+[Unit]
+Description=php
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop php
+ExecStartPre=-/usr/bin/docker kill php
+ExecStartPre=-/usr/bin/docker rm php
+ExecStartPre=-/home/core/docker/shell/install_fleetctl php
+ExecStartPre=-/usr/bin/docker network create nginx-network
+ExecStart=/usr/bin/docker run --name php --net nginx-network -v /home/core/data/php:/php -v /home/core/data/www:/www -v /home/core/data/www/composer:/root/.composer wenshunbiao/php
+ExecStop=/usr/bin/docker stop php
+ExecStop=/usr/bin/docker kill php
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+

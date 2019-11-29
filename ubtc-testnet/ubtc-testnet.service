@@ -1,0 +1,18 @@
+[Unit]
+Description=ubtc-testnet
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop ubtc-testnet
+ExecStartPre=-/usr/bin/docker kill ubtc-testnet
+ExecStartPre=-/usr/bin/docker rm ubtc-testnet
+ExecStart=/usr/bin/docker run --name=ubtc-testnet -p 13019:8000 -v /home/core/data/ubtc-testnet:/data ivories/ubtc /app/ubcd -printtoconsole -datadir=/data -rpcuser=root -rpcpassword=test -rpcport=8000 -rpcallowip=0.0.0.0/32 -testnet
+ExecStop=/usr/bin/docker stop ubtc-testnet
+
+[Install]
+WantedBy=multi-user.target
+

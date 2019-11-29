@@ -1,0 +1,32 @@
+#在一个处于running状态的容器运行job
+[job-exec "php-run-charge-1s"]
+schedule = @every 1s
+container = php
+command = php /www/test.php
+
+#在宿主机上运行
+[job-local "git-pull-xddx-api"]
+schedule = @every 120s
+command = git -C /home/core/data/www/xddx/api pull
+
+[job-exec "job-executed-on-running-container"]
+schedule = @hourly
+container = my-container
+command = touch /tmp/example
+
+#指定一个镜像，用其创建一个新的容器，然后运行相应指令
+[job-run "job-executed-on-new-container"]
+schedule = @hourly
+image = ubuntu:latest
+command = touch /tmp/example
+
+[job-local "job-executed-on-current-host"]
+schedule = @hourly
+command = touch /tmp/example
+
+#在swarm中运行
+[job-service-run "service-executed-on-new-container"]
+schedule = 0,20,40 * * * *
+image = ubuntu
+network = swarm_network
+command =  touch /tmp/example

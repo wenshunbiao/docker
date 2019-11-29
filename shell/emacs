@@ -1,0 +1,47 @@
+#! /bin/bash
+
+EMACS_DIR=/home/core/data/emacs
+EMACS_SSH_DIR=/home/core/.ssh/emacs
+EMACS_ID_RSA=$EMACS_SSH_DIR/emacs_id_rsa
+
+if [ ! -f "$EMACS_ID_RSA" ]
+then
+
+    sudo mkdir -p $EMACS_SSH_DIR
+
+    sudo ssh-keygen -f $EMACS_ID_RSA -t rsa
+    sudo cp -rfp $EMACS_ID_RSA.pub $EMACS_SSH_DIR/authorized_keys
+
+    echo 'StrictHostKeyChecking no' >> /home/core/.ssh/config
+    echo 'UserKnownHostsFile /dev/null' >> /home/core/.ssh/config
+    sudo cp -rfp /home/core/.ssh/config $EMACS_SSH_DIR/config
+
+fi
+
+echo "init ..."
+docker stop emacs 2>/dev/null
+echo "loading ..."
+docker rm emacs 2>/dev/null
+
+EMACS_RUN_APP=''
+
+if [ -f "$EMACS_DIR/emacs.sh" ]
+then
+    EMACS_RUN_APP="-v $EMACS_DIR/emacs.sh:/usr/bin/e"
+fi
+
+if [ -f "/root/.ssh/id_rsa" ]
+then
+    sudo cp -rfp /root/.ssh/id_rsa $EMACS_SSH_DIR/id_rsa
+fi
+
+docker run -d --name emacs -u root -p 127.0.0.1:5858:22 -v /var/run/docker.sock:/var/run/docker.sock -v $EMACS_DIR/root:/root -v $EMACS_SSH_DIR:/root/.ssh -v $EMACS_DIR:/root/.emacs.d -v /home/core/data:/home/core/data -v /home/core/laravel:/home/core/laravel -v /etc/ssh/ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key $EMACS_RUN_APP ivories/emacs 2>/dev/null
+
+sleep 3s
+
+sudo ssh -t -i $EMACS_ID_RSA root@127.0.0.1 -p 5858 'chown -R root:root /root/.ssh' 2>/dev/null
+sudo ssh -t -i $EMACS_ID_RSA root@127.0.0.1 -p 5858 'git config --global user.email "server@server.com"' 2>/dev/null
+sudo ssh -t -i $EMACS_ID_RSA root@127.0.0.1 -p 5858 'git config --global user.name "Server"' 2>/dev/null
+sudo ssh -t -i $EMACS_ID_RSA root@127.0.0.1 -p 5858 'env TERM=xterm-256color e'
+
+docker stop emacs && docker rm emacs 2>/dev/null &

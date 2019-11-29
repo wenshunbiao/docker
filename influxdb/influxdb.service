@@ -1,0 +1,18 @@
+[Unit]
+Description=influxdb
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop influxdb
+ExecStartPre=-/usr/bin/docker kill influxdb
+ExecStartPre=-/usr/bin/docker rm influxdb
+ExecStart=/usr/bin/docker run --name=influxdb -p 8083:8083 -p 8086:8086 -v /home/core/local/influxdb:/var/lib/influxdb ivories/heapster-influxdb:1.0
+ExecStop=/usr/bin/docker stop influxdb
+ExecStop=/usr/bin/docker kill influxdb
+
+[Install]
+WantedBy=multi-user.target

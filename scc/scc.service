@@ -1,0 +1,19 @@
+[Unit]
+Description=sc
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop sc
+ExecStartPre=-/usr/bin/docker kill sc
+ExecStartPre=-/usr/bin/docker rm sc
+#ExecStart=/usr/bin/docker run --name=sc -p 10008:80 -v /home/core/data/sc/default:/etc/nginx/sites-available/default -v /home/core/data/sc/password:/password -v /home/core/data/sc/start.sh:/start.sh -v /home/core/data/wallet/sc:/sia ivories/sc /start.sh
+ExecStart=/usr/bin/docker run --name=scc -p 10024:80 -v /home/core/data/wallet/scc:/sia ivories/scc
+ExecStop=/usr/bin/docker stop sc
+
+[Install]
+WantedBy=multi-user.target
+

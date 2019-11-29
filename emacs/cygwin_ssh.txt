@@ -1,0 +1,4 @@
+Download the cygwin setup.exe
+run ssh-host-config.exe
+do not mklink /D for the Administrator
+do not edit the sshd service in windows will failed on rsa key login
