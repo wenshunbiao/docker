@@ -3,6 +3,7 @@
 schedule = @every 1s
 container = php
 command = php /www/test.php
+#user = nobody
 
 #在宿主机上运行
 [job-local "git-pull-xddx-api"]
