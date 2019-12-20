@@ -1,0 +1,11 @@
+server.host: "0.0.0.0"
+elasticsearch.url: http://127.0.0.1:9200
+xpack:
+  apm.ui.enabled: false
+  graph.enabled: false
+  ml.enabled: false
+  monitoring.enabled: false
+  reporting.enabled: false
+  security.enabled: false
+  grokdebugger.enabled: false
+  searchprofiler.enabled: false

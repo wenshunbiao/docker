@@ -12,7 +12,7 @@ ExecStartPre=-/usr/bin/docker kill elasticsearch
 ExecStartPre=-/usr/bin/docker rm elasticsearch
 ExecStartPre=-/home/core/docker/shell/install_fleetctl elasticsearch
 ExecStartPre=/usr/sbin/sysctl -w vm.max_map_count=262144
-ExecStart=/usr/bin/docker run --name elasticsearch ivories/elasticsearch
+ExecStart=/usr/bin/docker run --name elasticsearch -p 9200:9200 -p 9300:9300 -v /home/core/data/elasticsearch/config:/usr/share/elasticsearch/config -v /home/core/data/elasticsearch/data:/usr/share/elasticsearch/data docker.elastic.co/elasticsearch/elasticsearch:6.4.3
 #-v /home/core/data/elasticsearch/config:/usr/share/elasticsearch/config -v /home/core/data/elasticsearch/data:/usr/share/elasticsearch/data
 ExecStop=/usr/bin/docker stop elasticsearch
 ExecStop=/usr/bin/docker kill elasticsearch

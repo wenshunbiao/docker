@@ -1,0 +1,23 @@
+[Unit]
+Description=logstash
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop logstash
+ExecStartPre=-/usr/bin/docker kill logstash
+ExecStartPre=-/usr/bin/docker rm logstash
+ExecStartPre=-/home/core/docker/shell/install_fleetctl logstash
+ExecStart=/usr/bin/docker run --name logstash -v /home/core/data/logstash/pipeline/:/usr/share/logstash/pipeline/ -v /home/core/data/logstash/config/:/usr/share/logstash/config/ docker.elastic.co/logstash/logstash:6.4.3
+ExecStop=/usr/bin/docker stop logstash
+ExecStop=/usr/bin/docker kill logstash
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+

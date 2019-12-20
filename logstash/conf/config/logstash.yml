@@ -1,0 +1,7 @@
+config:
+  reload:
+    automatic: true
+    interval: 3s
+xpack:
+  management.enabled: false
+  monitoring.enabled: false

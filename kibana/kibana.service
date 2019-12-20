@@ -1,0 +1,23 @@
+[Unit]
+Description=kibana
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop kibana
+ExecStartPre=-/usr/bin/docker kill kibana
+ExecStartPre=-/usr/bin/docker rm kibana
+ExecStartPre=-/home/core/docker/shell/install_fleetctl kibana
+ExecStart=/usr/bin/docker run --name kibana -p 5601:5601 -v /home/core/data/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml docker.elastic.co/kibana/kibana:6.4.3
+ExecStop=/usr/bin/docker stop kibana
+ExecStop=/usr/bin/docker kill kibana
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+
