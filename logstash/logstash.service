@@ -11,7 +11,8 @@ ExecStartPre=-/usr/bin/docker stop logstash
 ExecStartPre=-/usr/bin/docker kill logstash
 ExecStartPre=-/usr/bin/docker rm logstash
 ExecStartPre=-/home/core/docker/shell/install_fleetctl logstash
-ExecStart=/usr/bin/docker run --name logstash -v /home/core/data/logstash/pipeline/:/usr/share/logstash/pipeline/ -v /home/core/data/logstash/config/:/usr/share/logstash/config/ docker.elastic.co/logstash/logstash:6.4.3
+ExecStartPre=-/usr/bin/docker network create nginx-network
+ExecStart=/usr/bin/docker run --name logstash --net nginx-network -v /home/core/data/logstash/pipeline/:/usr/share/logstash/pipeline/ -v /home/core/data/logstash/config/:/usr/share/logstash/config/ wenshunbiao/logstash
 ExecStop=/usr/bin/docker stop logstash
 ExecStop=/usr/bin/docker kill logstash
 

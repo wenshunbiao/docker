@@ -11,7 +11,8 @@ ExecStartPre=-/usr/bin/docker stop kibana
 ExecStartPre=-/usr/bin/docker kill kibana
 ExecStartPre=-/usr/bin/docker rm kibana
 ExecStartPre=-/home/core/docker/shell/install_fleetctl kibana
-ExecStart=/usr/bin/docker run --name kibana -p 5601:5601 -v /home/core/data/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml docker.elastic.co/kibana/kibana:6.4.3
+ExecStartPre=-/usr/bin/docker network create nginx-network
+ExecStart=/usr/bin/docker run --name kibana --net nginx-network -p 5601:5601 -v /home/core/data/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml wenshunbiao/kibana
 ExecStop=/usr/bin/docker stop kibana
 ExecStop=/usr/bin/docker kill kibana
 
