@@ -1,8 +1,10 @@
-[parity]
-chain = "ropsten"
-mode = "active"
-no_download = true
+[footprint]
+pruning = "fast"
 
+[parity]
+chain = "ethereum"
+mode = "active"
+no_download = false
 
 [rpc]
 disable = false
@@ -12,3 +14,6 @@ cors = []
 apis = ["web3", "eth", "pubsub", "net", "parity", "parity_pubsub", "traces", "rpc", "shh", "shh_pubsub", "personal"]
 hosts = ["none"]
 
+[network]
+min_peers = 300
+max_peers = 300
