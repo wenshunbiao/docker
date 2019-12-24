@@ -1,0 +1,18 @@
+[Unit]
+Description=eth-parity
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop eth-parity
+ExecStartPre=-/usr/bin/docker kill eth-parity
+ExecStartPre=-/usr/bin/docker rm eth-parity
+ExecStart=/usr/bin/docker run --name=eth-parity -u root -p 10003:80 -v /home/core/data/eth-parity/conf.d:/etc/nginx/conf.d -v /home/core/data/eth-parity:/root/.local/share/io.parity.ethereum wenshunbiao/eth-parity
+ExecStop=/usr/bin/docker stop eth-parity
+
+[Install]
+WantedBy=multi-user.target
+
