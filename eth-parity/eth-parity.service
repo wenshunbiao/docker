@@ -10,7 +10,9 @@ TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker stop eth-parity
 ExecStartPre=-/usr/bin/docker kill eth-parity
 ExecStartPre=-/usr/bin/docker rm eth-parity
-ExecStart=/usr/bin/docker run --name=eth-parity -u root -p 10003:80 -v /home/core/data/eth-parity/conf.d:/etc/nginx/conf.d -v /home/core/data/eth-parity:/root/.local/share/io.parity.ethereum wenshunbiao/eth-parity
+ExecStartPre=-/usr/bin/docker network create coin-network
+
+ExecStart=/usr/bin/docker run --name=eth-parity --net coin-network -u root -p 10004:80 -v /home/core/data/eth-parity/conf.d:/etc/nginx/conf.d -v /home/core/data/eth-parity/supervisord.conf:/supervisor/supervisord.conf -v /home/core/data/eth-parity:/root/.local/share/io.parity.ethereum wenshunbiao/eth-parity
 ExecStop=/usr/bin/docker stop eth-parity
 
 [Install]
