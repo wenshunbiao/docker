@@ -63,3 +63,6 @@ see https://www.cnblogs.com/yufeng218/p/8370670.html
     fl service_name                 #list one fleetctl service(except global service)
     web                             #start/restart fleetctl web service
 
+## License
+
+The CoreOS docker is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
