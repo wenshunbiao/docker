@@ -35,6 +35,8 @@ then
     sudo cp -rfp /root/.ssh/id_rsa $EMACS_SSH_DIR/id_rsa
 fi
 
+sudo chmod -R 600 /etc/ssh/ssh_host_rsa_key
+
 docker run -d --name emacs -u root -p 127.0.0.1:5858:22 -v /var/run/docker.sock:/var/run/docker.sock -v $EMACS_DIR/root:/root -v $EMACS_SSH_DIR:/root/.ssh -v $EMACS_DIR:/root/.emacs.d -v /home/core/data:/home/core/data -v /home/core/laravel:/home/core/laravel -v /etc/ssh/ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key $EMACS_RUN_APP ivories/emacs 2>/dev/null
 
 sleep 3s
