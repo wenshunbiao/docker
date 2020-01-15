@@ -65,7 +65,7 @@ see https://www.cnblogs.com/yufeng218/p/8370670.html
 
 ## 致谢
 
-感谢JetBrains对开源项目的支持与帮助 https://www.jetbrains.com/?from=coreos%20docker
+感谢 [JetBrains](https://www.jetbrains.com/?from=coreos%20docker) 对开源项目的支持与帮助
 
 ![avatar](./doc/images/jetbrains-variant-4.png)
 
