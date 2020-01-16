@@ -1,6 +1,6 @@
 FROM library/composer:1.6.3
 
-RUN apk add --no-cache util-linux bash zsh git \
+RUN apk add --no-cache util-linux bash zsh git autoconf build-base \
  && git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh \
  && cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
 
@@ -8,6 +8,7 @@ WORKDIR /www
 
 RUN docker-php-ext-install mysqli
 RUN docker-php-ext-install pdo_mysql
+RUN pecl install swoole && docker-php-ext-enable swoole
 
 ENV NODE_VERSION 10.15.1
 
@@ -86,6 +87,7 @@ RUN docker-php-ext-install gd
 
 RUN npm install cnpm -g --registry=https://registry.npm.taobao.org
 RUN cnpm install --registry=https://registry.npm.taobao.org && rm -f package.json
+RUN apk del build-base autoconf
 
 ENTRYPOINT [""]
 
