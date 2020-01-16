@@ -1,11 +1,12 @@
 FROM php:7.2.24-fpm-alpine
 
+ENV SWOOLE_VERSION 4.4.15
+
 RUN apk add --no-cache bash autoconf build-base \
     && apk add --no-cache bash wget libpng-dev libmcrypt-dev libstdc++ libevent-dev \
     && docker-php-ext-install gd mysqli pdo_mysql bcmath opcache pcntl zip \
     && pecl install redis \
     && pecl install xdebug \
-    && pecl install swoole \
     && pecl install channel://pecl.php.net/mcrypt-1.0.1 \
 
     && apk add --no-cache freetype-dev jpeg-dev \
@@ -21,6 +22,12 @@ RUN apk add --no-cache bash autoconf build-base \
     && wget https://github.com/yunnian/php-nsq/archive/v3.2.0.tar.gz \
     && tar zxvf v3.2.0.tar.gz && cd php-nsq-3.2.0 && phpize && ./configure && make && make install \
     && cd .. && rm -rf v3.2.0.tar.gz php-nsq-3.2.0 \
+
+    && wget https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz \
+    && tar zxvf v${SWOOLE_VERSION}.tar.gz && cd swoole-src-${SWOOLE_VERSION} && cp -a /usr/include/openssl /var/www/html/swoole-src-${SWOOLE_VERSION}/include && phpize \
+    && ./configure --enable-http2 --enable-mysqlnd --enable-openssl --with-openssl-dir=/usr/include/openssl \
+    && make && make install \
+    && cd .. && rm -rf v${SWOOLE_VERSION}.tar.gz swoole-src-${SWOOLE_VERSION} \
 
     && apk del build-base autoconf
 
