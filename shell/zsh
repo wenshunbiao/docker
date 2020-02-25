@@ -1,3 +1,0 @@
-#!/bin/bash
-p_by_name ivories/zsh 2>/dev/null
-docker run -it --rm --net nginx-network -p 8000:8000 -v ~/.ssh:/root/.ssh -v ~/data/www:/www -v ~/data/www/composer:/root/.composer ivories/zsh
