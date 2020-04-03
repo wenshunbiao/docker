@@ -1,0 +1,24 @@
+[Unit]
+Description=mysql2
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop mysql2
+ExecStartPre=-/usr/bin/docker kill mysql2
+ExecStartPre=-/usr/bin/docker rm mysql2
+ExecStartPre=-/home/core/docker/shell/install_fleetctl mysql2
+ExecStartPre=-/usr/bin/docker network create nginx-network
+ExecStart=/usr/bin/docker run --name mysql2 --net nginx-network -p 3306:3306 -v /home/core/data/mysql2/conf.d:/etc/mysql/conf.d -v /home/core/data/mysql2/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=yellow mysql:8.0.19
+ExecStop=/usr/bin/docker stop mysql2
+ExecStop=/usr/bin/docker kill mysql2
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+
