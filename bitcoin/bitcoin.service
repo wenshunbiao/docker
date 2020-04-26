@@ -1,0 +1,23 @@
+[Unit]
+Description=bitcoin
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop bitcoin
+ExecStartPre=-/usr/bin/docker kill bitcoin
+ExecStartPre=-/usr/bin/docker rm bitcoin
+ExecStartPre=-/usr/bin/docker network create coin-network
+
+ExecStart=/usr/bin/docker run --name bitcoin --net coin-network -u root -p 18332:8332 -v /home/core/data/bitcoin:/root/.bitcoin/ wenshunbiao/bitcoin
+
+#/app/bitcoin/bin/bitcoind -startclean
+
+ExecStop=/usr/bin/docker stop bitcoin
+ExecStop=/usr/bin/docker kill bitcoin
+
+[Install]
+WantedBy=multi-user.target
