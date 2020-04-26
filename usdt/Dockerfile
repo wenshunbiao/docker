@@ -1,7 +1,7 @@
 FROM debian:stretch-slim
 MAINTAINER Vincent Gu <v@vgu.io>
 
-ENV OMNICORE_VER 0.5.0
+ENV OMNICORE_VER 0.8.1
 ENV OMNICORE_ARCH x86_64
 
 ENV RPC_USER user
@@ -40,17 +40,17 @@ RUN set -ex \
 && ln -sfn ${APP_NAME} /home/${APP_USER}/.bitcoin \
 && chown -R ${APP_USER}:${APP_GROUP} /home/${APP_USER}/.bitcoin
 
-RUN apt-get install -qqy supervisor \
-&&  mkdir /supervisor
+#RUN apt-get install -qqy supervisor \
+#&&  mkdir /supervisor
 
-COPY supervisord.conf /supervisor/supervisord.conf
+#COPY supervisord.conf /supervisor/supervisord.conf
 
-COPY conf/conf.d /etc/nginx/conf.d
+#COPY conf/conf.d /etc/nginx/conf.d
 
 VOLUME /data
 
 EXPOSE 8332
 
 ENTRYPOINT [""]
-#CMD ["/app/omnicore/bin/omnicored"]
-CMD /usr/bin/supervisord -u root  -c /supervisor/supervisord.conf -n
+CMD ["/app/omnicore/bin/omnicored"]
+#CMD /usr/bin/supervisord -u root  -c /supervisor/supervisord.conf -n
