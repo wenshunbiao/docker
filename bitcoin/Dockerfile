@@ -1,7 +1,7 @@
 FROM ubuntu:xenial
 MAINTAINER Kyle Manna <kyle@kylemanna.com>
 
-ENV BITCOIN_VER 0.17.1
+ENV BITCOIN_VER 0.19.1
 
 # define default directory
 ENV APP_DIR /app

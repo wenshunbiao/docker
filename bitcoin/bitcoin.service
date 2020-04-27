@@ -12,7 +12,7 @@ ExecStartPre=-/usr/bin/docker kill bitcoin
 ExecStartPre=-/usr/bin/docker rm bitcoin
 ExecStartPre=-/usr/bin/docker network create coin-network
 
-ExecStart=/usr/bin/docker run --name bitcoin --net coin-network -u root -p 18332:8332 -v /home/core/data/bitcoin:/root/.bitcoin/ wenshunbiao/bitcoin
+ExecStart=/usr/bin/docker run --name bitcoin --net coin-network -u root -p 18332:8332 -v /home/core/data/bitcoin:/root/.bitcoin/ wenshunbiao/bitcoin:0.19.1
 
 #/app/bitcoin/bin/bitcoind -startclean
 
