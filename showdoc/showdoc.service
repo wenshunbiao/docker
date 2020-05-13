@@ -1,0 +1,23 @@
+[Unit]
+Description=showdoc
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop showdoc
+ExecStartPre=-/usr/bin/docker kill showdoc
+ExecStartPre=-/usr/bin/docker rm showdoc
+ExecStartPre=-/home/core/docker/shell/install_fleetctl showdoc
+ExecStart=/usr/bin/docker run --name showdoc -p 4999:80 --user=root --privileged=true -v /home/core/data/showdoc:/var/www/html star7th/showdoc
+ExecStop=/usr/bin/docker stop showdoc
+ExecStop=/usr/bin/docker kill showdoc
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+
