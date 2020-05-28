@@ -1,0 +1,2 @@
+#!/bin/bash
+docker run --name=npm -it --rm -v $(pwd):$(pwd) -w $(pwd) ivories/laravel node $*
