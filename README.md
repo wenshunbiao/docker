@@ -51,17 +51,13 @@ see https://www.cnblogs.com/yufeng218/p/8370670.html
 
     dps                             #show all docker services
     i service_name                  #install service
-    s service_name                  #start/restart fleetctl service
-    p service_name                  #stop fleetctl service
+    s service_name                  #start/restart service service
+    p service_name                  #stop service service
     d service_name                  #enter service container, if the error is reported, try `d service_name sh`
     j service_name                  #view service history log
     jf service_name                 #scroll to view service log
-    ss service_name                 #start/restart systemctl service
     st service_name                 #status systemctl service
-    sp service_name                 #stop systemctl service
-    fl                              #list all service
-    fl service_name                 #list one fleetctl service(except global service)
-    web                             #start/restart fleetctl web service
+    web                             #start/restart service web service
 
 ## 致谢
 
