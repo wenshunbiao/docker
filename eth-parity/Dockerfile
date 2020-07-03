@@ -1,4 +1,4 @@
-FROM parity/parity:stable
+FROM parity/parity:v2.7.2-stable
 
 USER root
 RUN apt update
