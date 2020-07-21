@@ -12,7 +12,8 @@ ExecStartPre=-/usr/bin/docker kill eth-geth
 ExecStartPre=-/usr/bin/docker rm eth-geth
 ExecStartPre=-/usr/bin/docker network create coin-network
 
-ExecStart=/usr/bin/docker run --name=eth-geth --net coin-network -v /home/core/data/eth-geth:/root ethereum/client-go:v1.9.17
+ExecStart=/usr/bin/docker run --name=eth-geth --net coin-network -v /home/core/data/eth-geth/ethereum:/root/.ethereum ethereum/client-go:v1.9.17 \
+--nousb --syncmode fast --cache 1024 --rpc --rpcapi=eth,net,web3 --rpcaddr 127.0.0.1
 
 ExecStop=/usr/bin/docker stop eth-geth
 
