@@ -12,7 +12,7 @@ ExecStartPre=-/usr/bin/docker kill eth-geth
 ExecStartPre=-/usr/bin/docker rm eth-geth
 ExecStartPre=-/usr/bin/docker network create coin-network
 
-ExecStart=/usr/bin/docker run --name=eth-geth --net coin-network -p 10003:80 --cap-add=NET_ADMIN --device=/dev/net/tun -v /home/core/data/eth-geth/conf.d:/etc/nginx/conf.d -v /home/core/data/eth-geth/supervisord.conf:/supervisor/supervisord.conf -v /home/core/data/eth-geth:/root wenshunbiao/eth
+ExecStart=/usr/bin/docker run --name=eth-geth --net coin-network -v /home/core/data/eth-geth:/root ethereum/client-go:v1.9.17
 
 ExecStop=/usr/bin/docker stop eth-geth
 
