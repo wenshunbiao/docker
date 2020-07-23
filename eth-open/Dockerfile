@@ -1,6 +1,7 @@
 FROM openethereum/openethereum:v3.0.1
 
 USER root
+RUN ln -s /home/openethereum/openethereum /bin/parity
 RUN apk add nginx
 RUN apk add bash
 RUN apk add vim
