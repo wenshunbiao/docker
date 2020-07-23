@@ -12,7 +12,8 @@ ExecStartPre=-/usr/bin/docker kill eth-open
 ExecStartPre=-/usr/bin/docker rm eth-open
 ExecStartPre=-/usr/bin/docker network create coin-network
 
-ExecStart=/usr/bin/docker run --name=eth-open --net coin-network -u root -p 10004:80 -v /home/core/data/eth-open/conf.d:/etc/nginx/conf.d -v /home/core/data/eth-open/supervisord.conf:/supervisor/supervisord.conf -v /home/core/data/eth-open:/root/.local/share/openethereum wenshunbiao/openethereum:v3.0.1
+ExecStart=/usr/bin/docker run --name=eth-open --net coin-network -v /home/core/data/eth-open:/home/openethereum/.local/share/openethereum openethereum/openethereum:v3.0.1
+
 ExecStop=/usr/bin/docker stop eth-open
 
 [Install]
