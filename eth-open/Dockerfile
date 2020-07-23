@@ -6,6 +6,8 @@ RUN apk add nginx
 RUN apk add bash
 RUN apk add vim
 
+RUN mkdir /run/nginx
+
 #RUN sed -i "s#pcre_jit on;#pid /run/nginx.pid;#g" /etc/nginx/nginx.conf
 
 RUN apk add supervisor \
