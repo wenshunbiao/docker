@@ -1,0 +1,20 @@
+[Unit]
+Description=eth-open
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop eth-open
+ExecStartPre=-/usr/bin/docker kill eth-open
+ExecStartPre=-/usr/bin/docker rm eth-open
+ExecStartPre=-/usr/bin/docker network create coin-network
+
+ExecStart=/usr/bin/docker run --name=eth-open --net coin-network -u root -p 10004:80 -v /home/core/data/eth-open/conf.d:/etc/nginx/conf.d -v /home/core/data/eth-open/supervisord.conf:/supervisor/supervisord.conf -v /home/core/data/eth-open:/root/.local/share/openethereum wenshunbiao/openethereum:v3.0.1
+ExecStop=/usr/bin/docker stop eth-open
+
+[Install]
+WantedBy=multi-user.target
+
