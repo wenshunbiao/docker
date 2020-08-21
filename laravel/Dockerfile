@@ -8,6 +8,7 @@ WORKDIR /www
 
 RUN docker-php-ext-install mysqli
 RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install pcntl
 RUN pecl install swoole && docker-php-ext-enable swoole
 
 ENV NODE_VERSION 10.15.1
