@@ -1,0 +1,26 @@
+[Unit]
+Description=mycat
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop mycat
+ExecStartPre=-/usr/bin/docker kill mycat
+ExecStartPre=-/usr/bin/docker rm mycat
+ExecStartPre=-/home/core/docker/shell/install_fleetctl mycat
+ExecStartPre=-/usr/bin/docker network create nginx-network
+
+ExecStart=/usr/bin/docker run --name mycat --net nginx-network -p 8066:8066 -p 9066:9066 -v /home/core/data/mycat/conf:/usr/local/mycat/conf -v /home/core/data/mycat/logs:/usr/local/mycat/logs wenshunbiao/mycat
+
+ExecStop=/usr/bin/docker stop mycat
+ExecStop=/usr/bin/docker kill mycat
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+
