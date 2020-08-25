@@ -2,7 +2,7 @@
 
 sudo tee /etc/docker/daemon.json > /dev/null << 'EOF'
 {
-  "registry-mirrors": ["http://hub-mirror.c.163.com"]
+  "registry-mirrors": ["https://pee6w651.mirror.aliyuncs.com"]
 }
 EOF
 
