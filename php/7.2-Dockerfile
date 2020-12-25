@@ -29,9 +29,10 @@ RUN apk add --no-cache bash autoconf build-base \
     && make && make install \
     && cd .. && rm -rf v${SWOOLE_VERSION}.tar.gz swoole-src-${SWOOLE_VERSION} \
 
-    && apk del build-base autoconf
+    && apk del build-base autoconf libstdc++ libevent-dev 
 
 RUN echo "export TERM=xterm" >> /root/.bashrc \
+    && rm -rf /usr/local/etc/php-fpm.conf \
     && mkdir /php \
     && ln -s /php/php.ini /usr/local/etc/php/php.ini \
     && ln -s /php/php-fpm.conf /usr/local/etc/php-fpm.conf
