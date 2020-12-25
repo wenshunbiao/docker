@@ -1,41 +1,12 @@
 FROM php:8.0.0-fpm-alpine
 
-ENV SWOOLE_VERSION 4.5.10
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN chmod +x /usr/local/bin/install-php-extensions && sync
 
-RUN apk add --no-cache bash autoconf build-base wget libpng-dev libmcrypt-dev libstdc++ libevent-dev git
+RUN install-php-extensions gd pdo_mysql bcmath opcache pcntl zip redis mcrypt
 
-RUN wget https://libzip.org/download/libzip-1.2.0.tar.gz \
-    && tar -zxvf libzip-1.2.0.tar.gz && cd libzip-1.2.0 && ./configure && make && make install \
-    && export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig/" \
-    && cd .. && rm -rf libzip-1.2.0.tar.gz libzip-1.2.0
-
-RUN docker-php-ext-install gd mysqli pdo_mysql bcmath opcache pcntl zip
-
-RUN pecl install redis \
-    && pecl install xdebug \
-    && pecl install channel://pecl.php.net/mcrypt-1.0.4
-
-RUN apk add --no-cache freetype-dev jpeg-dev \
-    && docker-php-ext-configure gd --with-jpeg=/usr/include/ --with-freetype=/usr/include/freetype2/ \
-    && docker-php-ext-install -j$(nproc) gd
-
-#RUN apk add --no-cache libssh2-dev \
-#    && wget http://pecl.php.net/get/ssh2-1.2.tgz \
-#    && tar zxvf ssh2-1.2.tgz && cd ssh2-1.2 && phpize && ./configure --with-ssh2 && make \
-#    && mv modules/ssh2.so /usr/local/lib/php/extensions/no-debug-non-zts-20170718 \
-#    && cd .. && rm -rf ssh2-1.2*
-
-#RUN wget https://github.com/yunnian/php-nsq/archive/3.5.0.tar.gz \
-#    && tar zxvf 3.5.0.tar.gz && cd php-nsq-3.5.0 && phpize && ./configure && make && make install \
-#    && cd .. && rm -rf 3.5.0.tar.gz php-nsq-3.5.0
-
-#RUN wget https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz \
-#    && tar zxvf v${SWOOLE_VERSION}.tar.gz && cd swoole-src-${SWOOLE_VERSION} && cp -a /usr/include/openssl /var/www/html/swoole-src-${SWOOLE_VERSION}/include && phpize \
-#    && ./configure --enable-http2 --enable-mysqlnd --enable-openssl --with-openssl-dir=/usr/include/openssl \
-#    && make && make install \
-#    && cd .. && rm -rf v${SWOOLE_VERSION}.tar.gz swoole-src-${SWOOLE_VERSION}
-
-RUN apk del build-base autoconf
+# 默认关闭一些扩展
+RUN cd /usr/local/etc/php/conf.d && rm -rf docker-php-ext-swoole.ini
 
 RUN echo "export TERM=xterm" >> /root/.bashrc \
     && rm -rf /usr/local/etc/php-fpm.conf \

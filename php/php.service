@@ -12,7 +12,7 @@ ExecStartPre=-/usr/bin/docker kill php
 ExecStartPre=-/usr/bin/docker rm php
 ExecStartPre=-/home/core/docker/shell/install_fleetctl php
 ExecStartPre=-/usr/bin/docker network create nginx-network
-ExecStart=/usr/bin/docker run --name php --net nginx-network -v /home/core/data/php:/php -v /home/core/data/www:/www -v /home/core/data/www/composer:/root/.composer wenshunbiao/php
+ExecStart=/usr/bin/docker run --name php --net nginx-network -v /home/core/data/php:/php -v /home/core/data/www:/www -v /home/core/data/www/composer:/root/.composer wenshunbiao/php:7.2.34
 ExecStop=/usr/bin/docker stop php
 ExecStop=/usr/bin/docker kill php
 
