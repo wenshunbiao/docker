@@ -1,3 +1,3 @@
 #! /bin/bash
 
-docker run -it --rm -v /home/core/data/www/composer:/tmp -v $(pwd):$(pwd) -w $(pwd) wenshunbiao/laravel sh -c "composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ && composer $*"
+docker run -it --rm -v /home/core/data/www/composer:/tmp -v $(pwd):$(pwd) -w $(pwd) wenshunbiao/composer sh -c "composer $*"
