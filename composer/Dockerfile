@@ -2,6 +2,8 @@ FROM wenshunbiao/php
 
 WORKDIR /www
 
+ENV COMPOSER_HOME /tmp
+
 RUN echo "extension=swoole.so" > /usr/local/etc/php/conf.d/php-ext-swoole.ini
 #RUN curl -sS https://getcomposer.org/installer | php
 RUN wget https://github.com/composer/composer/releases/download/1.10.16/composer.phar
