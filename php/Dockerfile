@@ -37,7 +37,12 @@ RUN echo "export TERM=xterm" >> /root/.bashrc \
     && ln -s /php/php.ini /usr/local/etc/php/php.ini \
     && ln -s /php/php-fpm.conf /usr/local/etc/php-fpm.conf
 
-RUN apk add --no-cache git
+RUN apk add --no-cache git openssh-client
+
+RUN wget https://github.com/composer/composer/releases/download/1.10.16/composer.phar
+RUN chmod +x composer.phar
+RUN mv composer.phar /usr/local/bin/composer
+RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 
 WORKDIR /www
 
