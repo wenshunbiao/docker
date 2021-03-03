@@ -1,4 +1,6 @@
-# coreos docker
+# coreOS docker
+
+建议使用 Centos7 系统，因为要借助 Systemd 服务管理。
 
 ## install docker
     
@@ -6,6 +8,7 @@ see https://www.cnblogs.com/yufeng218/p/8370670.html
 
 ## init
 
+    yum install -y git
     useradd core
     cd /home/core
     git clone https://github.com/wenshunbiao/docker.git
@@ -14,27 +17,24 @@ see https://www.cnblogs.com/yufeng218/p/8370670.html
     export PATH="/home/core/docker/shell:$PATH"
     install
 
-## ssh-init
-
-    ssh_config www.youname.com 
+安装到此结束，以下是一些使用示例或提示。
+-----
 
 ## set timezone
 
     sudo timedatectl set-timezone Asia/Shanghai
 
-## set hostname
+## install service
 
-    sudo hostnamectl set-hostname yourname
+    i php                           # install php server
+    i nginx                         # install nginx share
+    i redis                         # install redis server
 
-## start/restart web service
+## start/restart service
 
-    web
-
-## install other service
-
-    s bind                          # install bind server
-    s samba                         # install samba share
-    s git                           # install git server
+    s php                           # start/restart php server
+    s nginx                         # start/restart nginx share
+    s redis                         # start/restart redis server
 
 ## config the server
 
