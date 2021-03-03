@@ -4,7 +4,7 @@ DIR_PATH="/home/core"
 DIR_DATA="$DIR_PATH/data/"
 DIR_DOCKER="$DIR_PATH/docker/"
 
-sudo mkdir -p $DIR_DATA
+mkdir -p $DIR_DATA
 ${DIR_DOCKER}shell/docker_close_selinux
 
 #if vps
@@ -16,10 +16,10 @@ ${DIR_DOCKER}shell/docker_close_selinux
 #echo "swap                    /swap                   swap    defaults        0 0" >> /etc/fstab
 #end if
 
-sleep 5
+sleep 3
 
-sudo touch /etc/sysctl.conf
-sudo chown -R core:core /etc/sysctl.conf
+touch /etc/sysctl.conf
+chown -R core:core /etc/sysctl.conf
 echo "vm.overcommit_memory = 1" >> /etc/sysctl.conf
 
 #for SERVICE_NAME in autorun dante
