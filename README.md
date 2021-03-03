@@ -8,6 +8,8 @@ see https://www.cnblogs.com/yufeng218/p/8370670.html
 
 ## init
 
+请忽略一些常规性的报错输出
+
     yum install -y git
     useradd core
     cd /home/core
