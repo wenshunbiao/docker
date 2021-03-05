@@ -5,7 +5,7 @@ DIR_DATA="$DIR_PATH/data/"
 DIR_DOCKER="$DIR_PATH/docker/"
 
 sudo mkdir -p $DIR_DATA
-${DIR_DOCKER}shell/docker_close_selinux
+${DIR_DOCKER}shell/docker_close_selinux 2>/dev/null
 
 #if vps
 #sudo dd if=/dev/zero of=/swap bs=1024 count=1024000
@@ -16,7 +16,7 @@ ${DIR_DOCKER}shell/docker_close_selinux
 #echo "swap                    /swap                   swap    defaults        0 0" >> /etc/fstab
 #end if
 
-sleep 5
+sleep 2
 
 sudo touch /etc/sysctl.conf
 sudo chown -R core:core /etc/sysctl.conf
