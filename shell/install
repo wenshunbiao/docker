@@ -31,3 +31,5 @@ echo "vm.overcommit_memory = 1" >> /etc/sysctl.conf
 #then
 #    sudo chown -R root:root $DIR_DATA
 #fi
+
+echo "Installation successful!"
