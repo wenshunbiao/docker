@@ -5,7 +5,7 @@ DIR_DATA="$DIR_PATH/data/"
 DIR_DOCKER="$DIR_PATH/docker/"
 
 sudo mkdir -p $DIR_DATA
-${DIR_DOCKER}shell/docker_close_selinux 2>/dev/null
+${DIR_DOCKER}shell/docker_close_selinux
 
 #if vps
 #sudo dd if=/dev/zero of=/swap bs=1024 count=1024000
