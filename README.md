@@ -28,6 +28,9 @@ see https://www.cnblogs.com/yufeng218/p/8370670.html
 
 ## install service
 
+预先封装了常用的服务，文件夹名称即是服务名称。
+如果遇到没有的服务，可提交让我扩展，或者fork项目，参考其他服务来自定义。
+
     i php                           # install php server
     i nginx                         # install nginx share
     i redis                         # install redis server
