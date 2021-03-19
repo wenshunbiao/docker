@@ -1,0 +1,31 @@
+[Unit]
+Description=mariadb
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop mariadb
+ExecStartPre=-/usr/bin/docker kill mariadb
+ExecStartPre=-/usr/bin/docker rm mariadb
+ExecStartPre=-/home/core/docker/shell/install_fleetctl mariadb
+ExecStartPre=-/usr/bin/docker network create nginx-network
+
+ExecStart=/usr/bin/docker run --name mariadb --net nginx-network -p 13306:3306 \
+-v /home/core/data/mariadb/my.cnf:/etc/mysql/my.cnf \
+-v /home/core/data/mariadb/data:/var/lib/mysql \
+-v /etc/localtime:/etc/localtime \
+-e MYSQL_ROOT_PASSWORD=yellow \
+mariadb:10.5
+
+ExecStop=/usr/bin/docker stop mariadb
+ExecStop=/usr/bin/docker kill mariadb
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+
