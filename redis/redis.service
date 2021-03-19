@@ -12,8 +12,8 @@ ExecStartPre=-/usr/bin/docker kill redis
 ExecStartPre=-/usr/bin/docker rm redis
 ExecStartPre=-/home/core/docker/shell/install_fleetctl redis
 ExecStartPre=-/usr/bin/docker network create nginx-network
-#ExecStart=/home/core/docker/shell/run_redis
-ExecStart=/usr/bin/docker run --name redis --net nginx-network -v /home/core/data/redis:/data ivories/redis
+ExecStartPre=-/usr/bin/echo 'never' > /sys/kernel/mm/transparent_hugepage/enabled
+ExecStart=/usr/bin/docker run --name redis --net nginx-network -v /home/core/data/redis:/data --sysctl net.core.somaxconn=1024 wenshunbiao/redis
 ExecStop=/usr/bin/docker stop redis
 ExecStop=/usr/bin/docker kill redis
 

@@ -1,5 +1,5 @@
-FROM redis:5-alpine3.8
+FROM redis:5-alpine
 
 EXPOSE 6379
 
-CMD ["redis-server"]
+CMD ["redis-server", "/data/redis.conf"]
