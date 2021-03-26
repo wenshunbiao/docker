@@ -1,7 +1,7 @@
 # CoreOS Docker
 
 让你更便捷、系统化的使用Docker  
-建议使用 Centos7 系统，因为要借助 Systemd 服务管理。
+建议使用 Centos7 系统，因为要借助 Systemd 服务管理
 
 ## Step.1 install docker
     
@@ -12,25 +12,18 @@
 
 请忽略一些常规性的报错输出
 
-    useradd core
-    cd /home/core
+    useradd -d /home/core -m core && cd /home/core
     git clone https://github.com/wenshunbiao/docker.git
-    chmod -R 777 docker/shell
-    /home/core/docker/shell/shell_init
-    export PATH="/home/core/docker/shell:$PATH"
-    install
+    chmod -R 777 docker/shell && export PATH="/home/core/docker/shell:$PATH"
+    install_coreos
 
 安装到此结束，以下是一些使用示例或提示。
 -----
 
-## set timezone
-
-    sudo timedatectl set-timezone Asia/Shanghai
-
 ## install service
 
-预先封装了常用的服务，文件夹名称即是服务名称。
-如果遇到没有的服务，可提交让我扩展，或者fork项目，参考其他服务来自定义。
+在 /home/core/docker 预先封装了大量服务，文件夹名称即是服务名称  
+所有服务都安装在 /home/core/data 目录
 
     i php                           # install php server
     i nginx                         # install nginx share
@@ -42,20 +35,12 @@
     s nginx                         # start/restart nginx share
     s redis                         # start/restart redis server
 
-## config the server
-
-    cd /home/core/data/nginx
-    vi nginx.conf # config nginx domain
-
-    cd /home/core/data/php
-    vi php.ini # config php.ini
-
-    cd /home/core/data/mysql
-    vi my.cnf # config my.cnf
-
 ## command list
 
+更多快捷命令请查看 /home/docker/docker/shell
+
     dps                             #show all docker services
+    dpp                             #show all docker service mapping ports
     i service_name                  #install service
     s service_name                  #start/restart service service
     p service_name                  #stop service service
@@ -63,7 +48,6 @@
     j service_name                  #view service history log
     jf service_name                 #scroll to view service log
     st service_name                 #status systemctl service
-    web                             #start/restart service web service
 
 ## 致谢
 
@@ -73,4 +57,4 @@
 
 ## License
 
-The CoreOS docker is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The CoreOS Docker is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

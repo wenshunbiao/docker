@@ -45,6 +45,7 @@ echo "Tips:"
 echo
 echo "install service eg:"
 echo "i php  #install php server"
+echo
 echo "start/restart service eg:"
 echo "s php  #start/restart php server"
 echo
