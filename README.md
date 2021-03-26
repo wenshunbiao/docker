@@ -37,7 +37,7 @@
 
 ## command list
 
-更多快捷命令请查看 /home/docker/docker/shell
+更多快捷命令请查看 /home/core/docker/shell
 
     dps                             #show all docker services
     dpp                             #show all docker service mapping ports
