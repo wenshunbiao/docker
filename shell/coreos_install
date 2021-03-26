@@ -4,6 +4,17 @@ DIR_PATH="/home/core"
 DIR_DATA="$DIR_PATH/data/"
 DIR_DOCKER="$DIR_PATH/docker/"
 
+if [ -d "$DIR_DATA" ]
+then
+    echo "already installed!"
+    exit
+fi
+
+echo "create core user"
+useradd -d /home/core -m core
+
+/home/core/docker/shell/shell_init
+
 sudo mkdir -p $DIR_DATA
 ${DIR_DOCKER}shell/docker_close_selinux
 
@@ -32,4 +43,16 @@ echo "vm.overcommit_memory = 1" >> /etc/sysctl.conf
 #    sudo chown -R root:root $DIR_DATA
 #fi
 
+echo
+echo "Tips:"
+echo
+echo "install service eg:"
+echo "i php  #install php server"
+echo "start/restart service eg:"
+echo "s php  #start/restart php server"
+echo
+echo "更多快捷命令请查看 /home/docker/docker/shell "
+echo "在 /home/core/docker 预先封装了大量服务，文件夹名称即是服务名称"
+echo "所有服务都安装在 /home/core/data 目录"
+echo
 echo "Installation successful!"

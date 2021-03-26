@@ -1,16 +1,17 @@
-# coreOS docker
+# CoreOS Docker
 
+让你更便捷、系统化的使用Docker  
 建议使用 Centos7 系统，因为要借助 Systemd 服务管理。
 
-## install docker
+## Step.1 install docker
     
-see https://www.cnblogs.com/yufeng218/p/8370670.html
+请自行安装Docker  
+参考教程：https://www.cnblogs.com/yufeng218/p/8370670.html
 
-## init
+## Step.2 install coreos docker
 
 请忽略一些常规性的报错输出
 
-    yum install -y git
     useradd core
     cd /home/core
     git clone https://github.com/wenshunbiao/docker.git

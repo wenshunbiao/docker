@@ -1,4 +1,4 @@
-# /etc/skel/.bashrc
+# .bashrc
 
 if [[ $- != *i* ]] ; then
         return
