@@ -10,9 +10,6 @@ then
     exit
 fi
 
-echo "create core user"
-useradd -d /home/core -m core
-
 /home/core/docker/shell/shell_init
 
 sudo mkdir -p $DIR_DATA
