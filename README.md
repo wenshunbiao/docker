@@ -23,7 +23,7 @@
 ## install service
 
 在 /home/core/docker 预先封装了大量服务，文件夹名称即是服务名称  
-所有服务都安装在 /home/core/data 目录
+所有服务都安装在 /home/core/data 目录，需要修改服务的配置请在这里修改，改完使用 `s service_name` 重启生效
 
     i php                           # install php server
     i nginx                         # install nginx share
