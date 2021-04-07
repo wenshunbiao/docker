@@ -1,14 +1,14 @@
 # CoreOS Docker
 
-让你更便捷、系统化的使用Docker  
-建议使用 Centos7 系统，因为要借助 Systemd 服务管理
+让你更便捷、系统化的使用Docker管理你的服务，一键定制你的环境   
+需借助 Systemd 服务管理，支持此服务的 Linux 系统都可安装，建议使用 Centos7 系统  
 
-## Step.1 install docker
+## Step.1 Install Docker
     
 请自行安装Docker  
 参考教程：https://www.cnblogs.com/yufeng218/p/8370670.html
 
-## Step.2 install coreos docker
+## Step.2 Install CoreOS Docker
 
 请使用root用户安装，忽略一些常规性的报错输出
 
@@ -39,15 +39,15 @@
 
 更多快捷命令请查看 /home/core/docker/shell
 
-    dps                             #show all docker services
-    dpp                             #show all docker service mapping ports
-    i service_name                  #install service
-    s service_name                  #start/restart service service
-    p service_name                  #stop service service
-    d service_name                  #enter service container, if the error is reported, try `d service_name sh`
-    j service_name                  #view service history log
-    jf service_name                 #scroll to view service log
-    st service_name                 #status systemctl service
+    dps                             # show all docker services
+    dpp                             # show all docker service mapping ports
+    i service_name                  # install service
+    s service_name                  # start/restart service service
+    p service_name                  # stop service service
+    d service_name                  # enter service container, if the error is reported, try `d service_name sh`
+    j service_name                  # view service history log
+    jf service_name                 # scroll to view service log
+    st service_name                 # status systemctl service
 
 ## 致谢
 
