@@ -25,29 +25,29 @@
 在 /home/core/docker 预先封装了大量服务，文件夹名称即是服务名称  
 所有服务都安装在 /home/core/data 目录，需要修改服务的配置请在这里修改，改完使用 `s service_name` 重启生效
 
-    i php                           # install php server
-    i nginx                         # install nginx share
-    i redis                         # install redis server
+    i php                         # install php server
+    i nginx                       # install nginx share
+    i redis                       # install redis server
 
 ## start/restart service
 
-    s php                           # start/restart php server
-    s nginx                         # start/restart nginx share
-    s redis                         # start/restart redis server
+    s php                         # start/restart php server
+    s nginx                       # start/restart nginx share
+    s redis                       # start/restart redis server
 
 ## command list
 
 更多快捷命令请查看 /home/core/docker/shell
 
-    dps                             # show all docker services
-    dpp                             # show all docker service mapping ports
-    i service_name                  # install service
-    s service_name                  # start/restart service service
-    p service_name                  # stop service service
-    d service_name                  # enter service container, if the error is reported, try `d service_name sh`
-    j service_name                  # view service history log
-    jf service_name                 # scroll to view service log
-    st service_name                 # status systemctl service
+    dps                           # show all docker services
+    dpp                           # show all docker service mapping ports
+    i service_name                # install service
+    s service_name                # start/restart service service
+    p service_name                # stop service service
+    d service_name                # enter service container, if the error is reported, try `d service_name sh`
+    j service_name                # view service history log
+    jf service_name               # scroll to view service log
+    st service_name               # status systemctl service
 
 ## 致谢
 
