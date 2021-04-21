@@ -42,7 +42,7 @@
   - `i service_name`   # 安装服务
   - `s service_name`   # 启动/重启 服务
   - `p service_name`   # 停止服务
-  - `d service_name`   # 进入服务容器, 如果报告错误, 尝试 `d service_name sh`
+  - `d service_name`   # 进入服务容器
   - `j service_name`   # 查看服务历史记录日志
   - `jf service_name`  # 滚动查看服务日志
   - `atop`             # 查看系统负载
