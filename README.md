@@ -29,7 +29,6 @@
   - `mysql`
   - `nginx`
   - `redis`
-  - `php`
   - `daemon` supervisor守护进程服务
   - `ofelia` 秒级定时器，可替代crontab，能和docker容器更方便的交互，https://github.com/mcuadros/ofelia
   - `shadowsocks` 飞机场
@@ -38,15 +37,14 @@
 更多快捷命令请查看 /home/core/docker/shell 
 
 - 快捷命令
-  - `dps`              # show all docker services
-  - `dpp`              # show all docker service mapping ports
-  - `i service_name`   # install service
-  - `s service_name`   # start/restart service service
-  - `p service_name`   # stop service service
-  - `d service_name`   # enter service container, if the error is reported, try `d service_name sh`
-  - `j service_name`   # view service history log
-  - `jf service_name`  # scroll to view service log
-  - `st service_name`  # status systemctl service
+  - `dps`              # 显示所有docker服务
+  - `dpp`              # 显示所有docker服务映射端口
+  - `i service_name`   # 安装服务
+  - `s service_name`   # 启动/重启 服务
+  - `p service_name`   # 停止服务
+  - `d service_name`   # 进入服务容器, 如果报告错误, 尝试 `d service_name sh`
+  - `j service_name`   # 查看服务历史记录日志
+  - `jf service_name`  # 滚动查看服务日志
   - `atop`             # 查看系统负载
   - `iotop`            # 查看系统I/O
   - `fio`              # 测试系统I/O
@@ -64,20 +62,6 @@
     s php                         # start/restart php server
     s nginx                       # start/restart nginx share
     s redis                       # start/restart redis server
-
-## command list
-
-更多快捷命令请查看 /home/core/docker/shell
-
-    dps                           # show all docker services
-    dpp                           # show all docker service mapping ports
-    i service_name                # install service
-    s service_name                # start/restart service service
-    p service_name                # stop service service
-    d service_name                # enter service container, if the error is reported, try `d service_name sh`
-    j service_name                # view service history log
-    jf service_name               # scroll to view service log
-    st service_name               # status systemctl service
 
 ## 致谢
 
