@@ -6,7 +6,7 @@
 ## Step.1 Install Docker
     
 请自行安装Docker  
-参考教程：https://www.cnblogs.com/yufeng218/p/8370670.html
+参考教程：https://www.kancloud.cn/wenshunbiao/wenshunbiao/1310878
 
 ## Step.2 Install CoreOS Docker
 
