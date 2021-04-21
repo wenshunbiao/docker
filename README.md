@@ -23,7 +23,12 @@
 ## 一些常用服务及快捷命令列表
 
 在 /home/core/docker 预先封装了大量服务，文件夹名称即是服务名称  
-所有服务都安装在 /home/core/data 目录，需要修改服务的配置请在这里修改，改完使用 `s service_name` 重启生效
+所有服务都安装在 /home/core/data 目录，需要修改服务的配置请在这里修改，改完使用 `s service_name` 重启生效  
+
+以 redis 为例，安装 redis 后，在 /home/core/data/redis 下能看到以下文件：  
+`redis.conf` `redis.service`  
+`redis.conf` 是 redis 的配置文件  
+`redis.service` 是启动 redis 服务所使用的启动参数，修改映射端口、目录等启动参数在这个文件修改
 
 - 常用服务
   - `mysql`
