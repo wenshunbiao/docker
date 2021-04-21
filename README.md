@@ -20,10 +20,40 @@
 安装到此结束，以下是一些使用示例或提示。
 -----
 
-## install service
+## 一些常用服务及快捷命令列表
 
 在 /home/core/docker 预先封装了大量服务，文件夹名称即是服务名称  
 所有服务都安装在 /home/core/data 目录，需要修改服务的配置请在这里修改，改完使用 `s service_name` 重启生效
+
+- 常用服务
+  - `mysql`
+  - `nginx`
+  - `redis`
+  - `php`
+  - `daemon` supervisor守护进程服务
+  - `ofelia` 秒级定时器，可替代crontab，能和docker容器更方便的交互，https://github.com/mcuadros/ofelia
+  - `shadowsocks` 飞机场
+  - ...
+
+更多快捷命令请查看 /home/core/docker/shell 
+
+- 快捷命令
+  - `dps`              # show all docker services
+  - `dpp`              # show all docker service mapping ports
+  - `i service_name`   # install service
+  - `s service_name`   # start/restart service service
+  - `p service_name`   # stop service service
+  - `d service_name`   # enter service container, if the error is reported, try `d service_name sh`
+  - `j service_name`   # view service history log
+  - `jf service_name`  # scroll to view service log
+  - `st service_name`  # status systemctl service
+  - `atop`             # 查看系统负载
+  - `iotop`            # 查看系统I/O
+  - `fio`              # 测试系统I/O
+  - `docker_mirror_aliyun`  # 为docker配置阿里云源
+  - ...
+
+## install service
 
     i php                         # install php server
     i nginx                       # install nginx share
