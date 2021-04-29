@@ -1,6 +1,6 @@
 {
     "log": {
-        "loglevel": "warning"
+        "loglevel": "none"
     },
     "routing": {
         "domainStrategy": "AsIs",
@@ -30,7 +30,7 @@
                 "network": "ws",
                 "security": "none",
                 "wsSettings": {
-                    "path": "/"
+                    "path": "/ray"
                 }
             }
         }

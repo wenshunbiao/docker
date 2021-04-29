@@ -8,7 +8,7 @@ server {
     server_name           mydomain.me;
     location /ray { # 与 V2Ray 配置中的 path 保持一致
         proxy_redirect off;
-        proxy_pass http://127.0.0.1:10000;#假设WebSocket监听在环回地址的10000端口上
+        proxy_pass http://v2ray:8888;#假设WebSocket监听在环回地址的8888端口上
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
