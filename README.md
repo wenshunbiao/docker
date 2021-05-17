@@ -68,6 +68,12 @@
     s nginx                       # start/restart nginx share
     s redis                       # start/restart redis server
 
+## stop service
+
+    p php                         # stop php server
+    p nginx                       # stop nginx share
+    p redis                       # stop redis server
+
 ## 致谢
 
 感谢 [JetBrains](https://www.jetbrains.com/?from=coreos%20docker) 对开源项目的支持与帮助  
