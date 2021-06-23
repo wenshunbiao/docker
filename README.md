@@ -12,10 +12,10 @@
 
 请使用root用户安装，忽略一些常规性的报错输出
 
-    useradd -d /home/core -m core && cd /home/core
-    git clone https://github.com/wenshunbiao/docker.git
-    chmod -R 777 docker/shell && export PATH="/home/core/docker/shell:$PATH"
-    install_coreos
+    # useradd -d /home/core -m core && cd /home/core
+    # git clone https://github.com/wenshunbiao/docker.git
+    # chmod -R 777 docker/shell && export PATH="/home/core/docker/shell:$PATH"
+    # install_coreos
 
 安装到此结束，以下是一些使用示例或提示。
 -----
