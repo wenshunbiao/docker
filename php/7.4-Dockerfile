@@ -3,7 +3,8 @@ FROM php:7.4.20-fpm-alpine
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN chmod +x /usr/local/bin/install-php-extensions && sync
 
-RUN install-php-extensions gd pdo_mysql bcmath opcache pcntl zip redis mcrypt ssh2 swoole
+# see https://github.com/mlocati/docker-php-extension-installer
+RUN install-php-extensions gd pdo_mysql bcmath opcache pcntl zip redis mcrypt ssh2 swoole mysqli
 
 # 默认关闭一些扩展
 RUN cd /usr/local/etc/php/conf.d && rm -rf docker-php-ext-swoole.ini
