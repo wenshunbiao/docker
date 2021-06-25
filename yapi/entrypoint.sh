@@ -7,7 +7,7 @@ tar -zxf /yapi-src/vendors.tar.gz -C /yapi
 
 if [ ! -f "/yapi/init.lock" ]; then
   tar -zxf /yapi-src/vendors.tar.gz -C /yapi
-  cd /yapi/vendors && npm run install-server
+  cd /yapi/vendors && cnpm run install-server
 fi
 
 exec "$@"

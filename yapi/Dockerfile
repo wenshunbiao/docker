@@ -10,13 +10,15 @@ RUN chmod +x /entrypoint.sh \
 
 RUN apk update && apk add mongodb=3.4.4-r0 nodejs npm
 
+RUN npm install -g cnpm --registry=https://registry.npm.taobao.org
+
 WORKDIR /yapi-src
 
 ADD https://github.com/YMFE/yapi/archive/refs/tags/v${YAPI_VERSION}.tar.gz /yapi-src
 
 RUN tar -zxf v${YAPI_VERSION}.tar.gz && rm v${YAPI_VERSION}.tar.gz && mv yapi-${YAPI_VERSION} vendors
 
-RUN cd /yapi-src/vendors && npm install --production --registry https://registry.npm.taobao.org
+RUN cd /yapi-src/vendors && cnpm install --production && cnpm cache clean --force
 
 RUN cd /yapi-src && tar -zcf vendors.tar.gz vendors && rm -rf vendors
 
