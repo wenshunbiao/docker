@@ -17,7 +17,12 @@ ExecStartPre=-/usr/bin/mkdir -p /home/core/data/elasticsearch/data
 ExecStartPre=-/usr/bin/chmod -R 777 /home/core/data/elasticsearch/config
 ExecStartPre=-/usr/bin/chmod 777 /home/core/data/elasticsearch/data
 
-ExecStart=/usr/bin/docker run --name elasticsearch --net nginx-network -p 9200:9200 -p 9300:9300 -v /home/core/data/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml -v /home/core/data/elasticsearch/data:/usr/share/elasticsearch/data -e "discovery.type=single-node" wenshunbiao/elasticsearch
+ExecStart=/usr/bin/docker run --name elasticsearch --net nginx-network -p 9200:9200 -p 9300:9300 \
+-v /home/core/data/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+-v /home/core/data/elasticsearch/data:/usr/share/elasticsearch/data \
+-v /home/core/data/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
+-e "discovery.type=single-node" \
+wenshunbiao/elasticsearch
 
 ExecStop=/usr/bin/docker stop elasticsearch
 ExecStop=/usr/bin/docker kill elasticsearch
