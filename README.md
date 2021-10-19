@@ -36,7 +36,7 @@
   - `redis`
   - `daemon` supervisor守护进程服务
   - `ofelia` 秒级定时器，可替代crontab，能和docker容器更方便的交互，https://github.com/mcuadros/ofelia
-  - `shadowsocks` 飞机场
+  - `v2ray` 飞机场
   - ...
 
 更多快捷命令请查看 /home/core/docker/shell 
