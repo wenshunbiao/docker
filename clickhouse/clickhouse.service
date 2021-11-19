@@ -1,0 +1,24 @@
+[Unit]
+Description=clickhouse
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop clickhouse
+ExecStartPre=-/usr/bin/docker kill clickhouse
+ExecStartPre=-/usr/bin/docker rm clickhouse
+ExecStartPre=-/home/core/docker/shell/install_fleetctl clickhouse
+ExecStartPre=-/usr/bin/docker network create nginx-network
+ExecStart=/usr/bin/docker run --name clickhouse --net nginx-network -p 8123:8123 -p 9000:9000 --ulimit nofile=262144:262144 -v /home/core/data/clickhouse/data:/var/lib/clickhouse -v /home/core/data/clickhouse/configs:/etc/clickhouse-server yandex/clickhouse-server:21.8.10.19-alpine
+ExecStop=/usr/bin/docker stop clickhouse
+ExecStop=/usr/bin/docker kill clickhouse
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+
