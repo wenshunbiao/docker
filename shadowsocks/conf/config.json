@@ -1,6 +1,6 @@
 {
     "server": "0.0.0.0",
     "server_port": 8388,
-    "password": "9iqu.cn",
+    "password": "password",
     "method": "chacha20-ietf-poly1305",
 }
