@@ -1,7 +1,7 @@
 # CoreOS Docker
 
 让你更便捷、系统化的使用Docker管理你的服务，一键定制你的环境   
-需借助 Systemd 服务管理，支持此服务的 Linux 系统都可安装，建议使用 Centos7 系统  
+需借助 Systemd 服务管理，支持此服务的 Linux 系统都可安装，建议使用 Centos7+ 系统  
 
 ## Step.1 Install Docker
     
