@@ -1,4 +1,4 @@
-FROM node:8-alpine
+FROM node:12-alpine
 
 ENV LANG=en_US.utf8 \
     TERM=xterm-256color
