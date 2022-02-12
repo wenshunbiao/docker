@@ -10,7 +10,7 @@ RUN chmod +x /entrypoint.sh \
 
 RUN apk update && apk add mongodb=3.4.4-r0 nodejs npm
 
-RUN npm install -g cnpm --registry=https://registry.npm.taobao.org
+RUN npm install -g cnpm --registry=https://registry.npmmirror.com
 
 WORKDIR /yapi-src
 
