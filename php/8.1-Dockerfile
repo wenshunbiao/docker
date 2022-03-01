@@ -1,0 +1,19 @@
+FROM php:8.1-fpm-alpine
+
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN chmod +x /usr/local/bin/install-php-extensions && sync
+
+RUN install-php-extensions gd pdo_mysql bcmath opcache pcntl zip redis mcrypt
+
+# 默认关闭一些扩展
+RUN cd /usr/local/etc/php/conf.d && rm -rf docker-php-ext-swoole.ini
+
+RUN echo "export TERM=xterm" >> /root/.bashrc \
+    && rm -rf /usr/local/etc/php-fpm.conf \
+    && mkdir /php \
+    && ln -s /php/php.ini /usr/local/etc/php/php.ini \
+    && ln -s /php/php-fpm.conf /usr/local/etc/php-fpm.conf
+
+WORKDIR /www
+
+CMD php-fpm
