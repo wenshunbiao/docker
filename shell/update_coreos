@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cd /home/core/docker && git pull
