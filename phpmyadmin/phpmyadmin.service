@@ -1,0 +1,25 @@
+[Unit]
+Description=phpmyadmin
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop phpmyadmin
+ExecStartPre=-/usr/bin/docker kill phpmyadmin
+ExecStartPre=-/usr/bin/docker rm phpmyadmin
+ExecStartPre=-/home/core/docker/shell/install_fleetctl phpmyadmin
+ExecStartPre=-/usr/bin/docker network create nginx-network
+ExecStart=/usr/bin/docker run --name phpmyadmin -p 8081:80 --net nginx-network -e PMA_ARBITRARY=1 phpmyadmin
+
+ExecStop=/usr/bin/docker stop phpmyadmin
+ExecStop=/usr/bin/docker kill phpmyadmin
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+
