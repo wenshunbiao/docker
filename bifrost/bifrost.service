@@ -1,0 +1,24 @@
+[Unit]
+Description=bifrost
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop bifrost
+ExecStartPre=-/usr/bin/docker kill bifrost
+ExecStartPre=-/usr/bin/docker rm bifrost
+ExecStartPre=-/home/core/docker/shell/install_fleetctl bifrost
+ExecStartPre=-/usr/bin/docker network create nginx-network
+ExecStart=/usr/bin/docker run --name bifrost --net nginx-network -p 21036:21036 -v /etc/localtime:/etc/localtime -v /home/core/data/bifrost/data:/linux/data -v /home/core/data/bifrost/etc:/linux/etc -v /home/core/data/bifrost/logs:/linux/logs jc3wish/bifrost
+ExecStop=/usr/bin/docker stop bifrost
+ExecStop=/usr/bin/docker kill bifrost
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+
