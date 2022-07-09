@@ -1,0 +1,31 @@
+[Unit]
+Description=postgres
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop postgres
+ExecStartPre=-/usr/bin/docker kill postgres
+ExecStartPre=-/usr/bin/docker rm postgres
+ExecStartPre=-/home/core/docker/shell/install_fleetctl postgres
+ExecStartPre=-/usr/bin/docker network create nginx-network
+
+ExecStart=/usr/bin/docker run --name postgres --net nginx-network -p 5432:5432 \
+-v /home/core/data/postgres/postgresql.conf:/etc/postgresql/postgresql.conf \
+-v /home/core/data/postgres/data:/var/lib/postgresql/data \
+-e POSTGRES_USER=postgres \
+-e POSTGRES_PASSWORD=yellow \
+postgres:alpine -c 'config_file=/etc/postgresql/postgresql.conf'
+
+ExecStop=/usr/bin/docker stop postgres
+ExecStop=/usr/bin/docker kill postgres
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+
