@@ -1,0 +1,25 @@
+[Unit]
+Description=planka
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop planka
+ExecStartPre=-/usr/bin/docker kill planka
+ExecStartPre=-/usr/bin/docker rm planka
+
+ExecStart=/usr/bin/docker run --name planka --net nginx-network -p 3000:1337 \
+-v /home/core/data/planka/data/user-avatars:/app/public/user-avatars \
+-v /home/core/data/planka/data/project-background-images:/app/public/project-background-images \
+-v /home/core/data/planka/data/attachments:/app/private/attachments \
+-e BASE_URL=http://localhost:3000 \
+-e SECRET_KEY=notsecretkey \
+-e DATABASE_URL=postgresql://postgres:yellow@postgres/postgres \
+meltyshev/planka
+
+ExecStop=/usr/bin/docker stop planka
+ExecStop=/usr/bin/docker kill planka
+
+[Install]
+WantedBy=multi-user.target
