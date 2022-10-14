@@ -1,6 +1,10 @@
 #!/bin/bash
 
-link="socks5://127.0.0.1:1080"
+if [ ! $DIY_PROXY ]; then
+  link="socks5://127.0.0.1:1080"
+else
+  link=$DIY_PROXY
+fi
 
 proxy=$link \
 http_proxy=$link \
