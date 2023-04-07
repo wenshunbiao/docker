@@ -1,6 +1,7 @@
 {
     "log": {
-        "loglevel": "none"
+        "loglevel": "none",
+        "access": "/dev/null"
     },
     "routing": {
         "domainStrategy": "AsIs",
