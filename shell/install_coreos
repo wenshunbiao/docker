@@ -43,6 +43,21 @@ echo "vm.overcommit_memory = 1" >> /etc/sysctl.conf
 echo
 echo "Tips:"
 echo
+echo "快捷命令"
+echo "dps # 显示所有docker服务"
+echo "dpp # 显示所有docker服务映射端口"
+echo "i service_name # 安装服务"
+echo "s service_name # 启动/重启 服务"
+echo "p service_name # 停止服务"
+echo "d service_name # 进入服务容器"
+echo "j service_name # 查看服务历史记录日志"
+echo "jf service_name # 滚动查看服务日志"
+echo "atop # 查看系统负载"
+echo "iotop # 查看系统I/O"
+echo "fio # 测试系统I/O"
+echo "docker_mirror_aliyun # 为docker配置阿里云源"
+echo "..."
+echo
 echo "install service eg:"
 echo "i php  #install php server"
 echo
@@ -54,3 +69,4 @@ echo "在 /home/core/docker 预先封装了大量服务，文件夹名称即是�
 echo "所有服务都安装在 /home/core/data 目录"
 echo
 echo "Installation successful!"
+
