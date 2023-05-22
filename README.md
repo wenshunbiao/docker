@@ -10,7 +10,7 @@
 
 ## Step.2 Install CoreOS Docker
 
-请使用root用户安装，忽略一些常规性的报错输出
+请使用root用户安装，需用到git，忽略一些常规性的报错输出
 
     # useradd -d /home/core -m core && cd /home/core
     # git clone https://github.com/wenshunbiao/docker.git
