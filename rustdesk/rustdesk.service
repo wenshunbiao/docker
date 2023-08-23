@@ -13,7 +13,7 @@ ExecStartPre=-/usr/bin/docker rm rustdesk
 ExecStartPre=-/home/core/docker/shell/install_fleetctl rustdesk
 
 # document: https://rustdesk.com/docs/en/
-ExecStart=/usr/bin/docker run --name rustdesk --net=host -v /home/core/data/rustdesk/data:/root rustdesk/rustdesk-server sh -c "hbbs -k your_key -r <relay-server-ip[:port]> & hbbr -k your_key"
+ExecStart=/usr/bin/docker run --name rustdesk --net=host rustdesk/rustdesk-server sh -c "hbbs -k your_key -r <relay-server-ip[:port]> & hbbr -k your_key"
 
 ExecStop=/usr/bin/docker stop rustdesk
 ExecStop=/usr/bin/docker kill rustdesk
