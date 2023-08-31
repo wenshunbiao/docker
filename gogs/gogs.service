@@ -9,7 +9,7 @@ RestartSec=30
 TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill gogs
 ExecStartPre=-/usr/bin/docker rm gogs
-ExecStart=/usr/bin/docker run --name gogs -p 333:22 -p 3000:3000 -v /home/core/data/gogs:/data ivories/gogs:1.0
+ExecStart=/usr/bin/docker run --name gogs -p 1022:22 -p 3000:3000 -v /home/core/data/gogs:/data gogs/gogs
 ExecStop=/usr/bin/docker kill gogs
 
 [Install]
